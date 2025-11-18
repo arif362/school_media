@@ -22,6 +22,9 @@ class PostsControllerTest extends TestCase
         'app.Posts',
     ];
 
+    /**
+     * @testdox GET /posts lists published posts
+     */
     public function testIndex(): void
     {
         $this->get('/posts');
@@ -30,6 +33,9 @@ class PostsControllerTest extends TestCase
         $this->assertResponseContains('Welcome to CakePHP');
     }
 
+    /**
+     * @testdox GET /posts/view/:id renders the requested post and slug route
+     */
     public function testView(): void
     {
         $this->get('/posts/view/1');
@@ -40,6 +46,9 @@ class PostsControllerTest extends TestCase
         $this->assertResponseOk();
     }
 
+    /**
+     * @testdox POST /posts/add persists a new post and redirects to index
+     */
     public function testAdd(): void
     {
         $this->enableCsrfToken();
@@ -58,6 +67,9 @@ class PostsControllerTest extends TestCase
         $this->assertRedirectContains('/posts');
     }
 
+    /**
+     * @testdox PUT /posts/edit/:id updates an existing post
+     */
     public function testEdit(): void
     {
         $this->enableCsrfToken();
@@ -76,6 +88,9 @@ class PostsControllerTest extends TestCase
         $this->assertRedirectContains('/school-media/1');
     }
 
+    /**
+     * @testdox DELETE /posts/delete/:id removes the post and redirects
+     */
     public function testDelete(): void
     {
         $this->enableCsrfToken();

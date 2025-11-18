@@ -29,9 +29,7 @@ class PagesControllerTest extends TestCase
     use IntegrationTestTrait;
 
     /**
-     * testDisplay method
-     *
-     * @return void
+     * @testdox GET /pages/home renders the public landing page
      */
     public function testDisplay()
     {
@@ -43,9 +41,7 @@ class PagesControllerTest extends TestCase
     }
 
     /**
-     * Test that missing template renders 404 page in production
-     *
-     * @return void
+     * @testdox GET /pages/not_existing returns 404 in production mode
      */
     public function testMissingTemplate()
     {
@@ -57,9 +53,7 @@ class PagesControllerTest extends TestCase
     }
 
     /**
-     * Test that missing template in debug mode renders missing_template error page
-     *
-     * @return void
+     * @testdox GET /pages/not_existing in debug shows Missing Template details
      */
     public function testMissingTemplateInDebug()
     {
@@ -73,9 +67,7 @@ class PagesControllerTest extends TestCase
     }
 
     /**
-     * Test directory traversal protection
-     *
-     * @return void
+     * @testdox GET /pages/../Layout/ajax is rejected with 403
      */
     public function testDirectoryTraversalProtection()
     {
@@ -85,9 +77,7 @@ class PagesControllerTest extends TestCase
     }
 
     /**
-     * Test that CSRF protection is applied to page rendering.
-     *
-     * @return void
+     * @testdox POST /pages/home without CSRF token is blocked
      */
     public function testCsrfAppliedError()
     {
@@ -98,9 +88,7 @@ class PagesControllerTest extends TestCase
     }
 
     /**
-     * Test that CSRF protection is applied to page rendering.
-     *
-     * @return void
+     * @testdox POST /pages/home succeeds when CSRF token present
      */
     public function testCsrfAppliedOk()
     {
