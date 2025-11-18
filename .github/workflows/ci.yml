@@ -35,7 +35,7 @@ jobs:
         php-version: ${{ matrix.php-version }}
         extensions: mbstring, intl, pdo_sqlite
         ini-values: zend.assertions=1
-        coverage: none
+        coverage: xdebug
 
     - name: Composer install
       uses: ramsey/composer-install@v3
@@ -46,10 +46,18 @@ jobs:
     - name: Composer post install
       run: composer run-script post-install-cmd --no-interaction
 
-    - name: Run PHPUnit
-      run: vendor/bin/phpunit
+    - name: Run PHPUnit with coverage
+      run: |
+        mkdir -p build/logs
+        vendor/bin/phpunit --coverage-clover build/logs/clover.xml
       env:
         DATABASE_TEST_URL: sqlite://./testdb.sqlite
+
+    - name: Upload coverage artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-${{ matrix.php-version }}-${{ matrix.dependencies }}
+        path: build/logs/clover.xml
 
   coding-standard:
     name: Coding Standard & Static Analysis

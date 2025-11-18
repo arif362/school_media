@@ -17,7 +17,7 @@ class PostsController extends AppController
     {
         $query = $this->Posts
             ->find()
-            ->orderDesc('Posts.created');
+            ->orderByDesc('Posts.created');
 
         $posts = $this->paginate($query);
 
