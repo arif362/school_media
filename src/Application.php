@@ -132,13 +132,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             'queryParam' => 'redirect',
         ]);
 
-        $service->loadIdentifier('Authentication.Password', [
-            'fields' => [
-                'username' => 'email',
-                'password' => 'password',
-            ],
-        ]);
-
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form', [
             'fields' => [
@@ -146,6 +139,14 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 'password' => 'password',
             ],
             'loginUrl' => '/login',
+            'identifier' => [
+                'Authentication.Password' => [
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password',
+                    ],
+                ],
+            ],
         ]);
 
         return $service;

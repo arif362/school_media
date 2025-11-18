@@ -14,6 +14,9 @@ class UsersControllerTest extends TestCase
         'app.Users',
     ];
 
+    /**
+     * @testdox POST /register stores a new user and redirects to login
+     */
     public function testRegisterSuccess(): void
     {
         $this->enableCsrfToken();
@@ -34,6 +37,9 @@ class UsersControllerTest extends TestCase
         $this->assertTrue($users->exists(['email' => $data['email']]));
     }
 
+    /**
+     * @testdox POST /login authenticates a user and redirects to the dashboard
+     */
     public function testLoginSuccess(): void
     {
         $this->enableCsrfToken();
