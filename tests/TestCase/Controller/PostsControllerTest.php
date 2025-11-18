@@ -73,7 +73,7 @@ class PostsControllerTest extends TestCase
         $this->put('/posts/edit/1', $data);
 
         $this->assertResponseSuccess();
-        $this->assertRedirectContains('/posts/view/1');
+        $this->assertRedirectContains('/school-media/1');
     }
 
     public function testDelete(): void
