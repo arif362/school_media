@@ -110,14 +110,26 @@ $footerColumns = [
         (function () {
             const toggle = document.querySelector('[data-nav-toggle]');
             const panel = document.querySelector('[data-nav-panel]');
-            if (!toggle || !panel) {
-                return;
+            if (toggle && panel) {
+                toggle.addEventListener('click', () => {
+                    panel.classList.toggle('is-open');
+                    toggle.classList.toggle('is-open');
+                    document.body.classList.toggle('nav-open', panel.classList.contains('is-open'));
+                });
             }
-            toggle.addEventListener('click', () => {
-                panel.classList.toggle('is-open');
-                toggle.classList.toggle('is-open');
-                document.body.classList.toggle('nav-open', panel.classList.contains('is-open'));
-            });
+
+            const slider = document.querySelector('[data-hero-slider]');
+            const prevBtn = document.querySelector('[data-slider-prev]');
+            const nextBtn = document.querySelector('[data-slider-next]');
+            if (slider && prevBtn && nextBtn) {
+                const scrollAmount = 280;
+                prevBtn.addEventListener('click', () => {
+                    slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                });
+                nextBtn.addEventListener('click', () => {
+                    slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                });
+            }
         })();
     ") ?>
 </body>

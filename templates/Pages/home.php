@@ -46,13 +46,25 @@ $programs = [
             </ul>
         </div>
     </div>
-    <div class="hero-slider" data-hero-slider>
-        <?php foreach ($mediaHighlights as $highlight): ?>
-            <article class="hero-slide">
-                <h4><?= h($highlight['title']) ?></h4>
-                <p><?= h($highlight['copy']) ?></p>
-            </article>
-        <?php endforeach; ?>
+    <div class="shell">
+        <div class="hero-slider-head">
+            <p class="hero-slider-label">Featured studio builds</p>
+            <div class="hero-slider-controls">
+                <button type="button" class="hero-slider-btn" data-slider-prev aria-label="Previous highlight">‹</button>
+                <button type="button" class="hero-slider-btn" data-slider-next aria-label="Next highlight">›</button>
+            </div>
+        </div>
+        <div class="hero-slider" data-hero-slider>
+            <?php foreach ($mediaHighlights as $index => $highlight): ?>
+                <article class="hero-slide">
+                    <span class="hero-slide__pill">0<?= $index + 1 ?></span>
+                    <div>
+                        <h4><?= h($highlight['title']) ?></h4>
+                        <p><?= h($highlight['copy']) ?></p>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
     </div>
 </section>
 
