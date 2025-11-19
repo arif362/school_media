@@ -18,6 +18,10 @@ class UsersController extends AppController
     {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated(['login', 'register']);
+
+        if (in_array($this->request->getParam('action'), ['login', 'register'], true)) {
+            $this->viewBuilder()->setLayout('auth');
+        }
     }
 
     public function login()

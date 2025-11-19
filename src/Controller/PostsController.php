@@ -3,11 +3,22 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Event\EventInterface;
+
 /**
  * Posts Controller
  */
 class PostsController extends AppController
 {
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        if (in_array($this->request->getParam('action'), ['add', 'edit'], true)) {
+            $this->viewBuilder()->setLayout('dashboard');
+        }
+    }
+
     /**
      * Index method
      *
