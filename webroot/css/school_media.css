@@ -884,7 +884,43 @@ body.auth-body {
 }
 
 .posts-pager .pagination {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 0.5rem;
+}
+
+.posts-pager .pagination li {
+    display: inline-flex;
+}
+
+.posts-pager .pagination a,
+.posts-pager .pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 31, 58, 0.15);
+    text-decoration: none;
+    color: var(--sm-navy);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.posts-pager .pagination .active span {
+    background: var(--sm-navy);
+    color: var(--sm-white);
+    border-color: var(--sm-navy);
+}
+
+.posts-pager .pagination a:hover {
+    border-color: var(--sm-gold);
+    color: var(--sm-gold);
 }
 
 .auth-wrap {

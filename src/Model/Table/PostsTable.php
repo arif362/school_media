@@ -108,8 +108,6 @@ class PostsTable extends Table
 
     public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
-        parent::beforeSave($event, $entity, $options);
-
         $slug = trim((string)$entity->slug);
         if ($slug === '') {
             $title = (string)$entity->title;
