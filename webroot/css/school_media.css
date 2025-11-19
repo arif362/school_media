@@ -1295,7 +1295,7 @@ body.auth-body {
 .dashboard-shell {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 280px 1fr;
     background: var(--sm-light);
 }
 
@@ -1305,8 +1305,17 @@ body.auth-body {
     padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    justify-content: space-between;
     border-right: 1px solid rgba(255, 255, 255, 0.08);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.dashboard-sidebar__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .dashboard-sidebar__brand {
@@ -1361,6 +1370,21 @@ body.auth-body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+}
+
+.dashboard-main__top-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dashboard-main__link {
+    font-weight: 600;
+    color: var(--sm-navy);
+    text-decoration: none;
+}
+
+.dashboard-main__link:hover {
+    color: var(--sm-gold);
 }
 
 .dashboard-header {
@@ -1704,6 +1728,7 @@ body.auth-body {
     .story-share {
         word-break: break-word;
     }
+
 }
 
 @media (max-width: 1024px) {
@@ -1712,11 +1737,10 @@ body.auth-body {
     }
 
     .dashboard-sidebar {
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
+        position: static;
+        height: auto;
+        flex-direction: column;
+        gap: 1.25rem;
     }
 
     .dashboard-nav {

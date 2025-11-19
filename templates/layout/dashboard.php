@@ -33,25 +33,30 @@ $navLinks = [
 <body class="sm-body dashboard-body">
     <div class="dashboard-shell">
         <aside class="dashboard-sidebar">
-            <a class="dashboard-sidebar__brand" href="<?= $this->Url->build('/') ?>">School Media</a>
-            <div class="dashboard-profile">
-                <span class="dashboard-avatar"><?= $identityInitial ?></span>
-                <div>
-                    <strong><?= h($identityName) ?></strong>
-                    <p><?= h(ucfirst($identityRole)) ?></p>
+            <div class="dashboard-sidebar__inner">
+                <a class="dashboard-sidebar__brand" href="<?= $this->Url->build('/') ?>">School Media</a>
+                <div class="dashboard-profile">
+                    <span class="dashboard-avatar"><?= $identityInitial ?></span>
+                    <div>
+                        <strong><?= h($identityName) ?></strong>
+                        <p><?= h(ucfirst($identityRole)) ?></p>
+                    </div>
                 </div>
+                <nav class="dashboard-nav">
+                    <?php foreach ($navLinks as $link): ?>
+                        <a class="dashboard-nav__link" href="<?= h($link['url']) ?>"><?= h($link['label']) ?></a>
+                    <?php endforeach; ?>
+                </nav>
             </div>
-            <nav class="dashboard-nav">
-                <?php foreach ($navLinks as $link): ?>
-                    <a class="dashboard-nav__link" href="<?= h($link['url']) ?>"><?= h($link['label']) ?></a>
-                <?php endforeach; ?>
-            </nav>
             <div class="dashboard-sidebar__cta">
                 <a class="btn btn--ghost w-full" href="<?= $this->Url->build('/logout') ?>"><?= __('Logout') ?></a>
             </div>
         </aside>
 
         <main class="dashboard-main">
+            <div class="dashboard-main__top-actions">
+                <?= $this->Html->link(__('View site →'), '/', ['class' => 'dashboard-main__link']) ?>
+            </div>
             <header class="dashboard-header">
                 <div>
                     <p class="eyebrow text-muted">

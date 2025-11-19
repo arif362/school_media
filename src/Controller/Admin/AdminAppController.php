@@ -30,6 +30,7 @@ class AdminAppController extends BaseController
             return $this->redirect('/');
         }
         $this->set('currentUser', $user);
+        $this->viewBuilder()->setLayout('dashboard');
     }
 }
 

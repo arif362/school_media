@@ -14,7 +14,11 @@ class PostsController extends AppController
     {
         parent::beforeFilter($event);
 
-        if (in_array($this->request->getParam('action'), ['add', 'edit'], true)) {
+        $action = $this->request->getParam('action');
+        $identity = $this->request->getAttribute('identity');
+        $canManage = $identity && in_array($identity->get('role'), ['admin', 'teacher'], true);
+
+        if (in_array($action, ['add', 'edit'], true) || ($action === 'index' && $canManage)) {
             $this->viewBuilder()->setLayout('dashboard');
         }
     }
