@@ -6,6 +6,10 @@
 /tmp/*
 /vendor/*
 .history
+node_modules/
+/webroot/css/app.css
+/webroot/css/tailwind.css
+.history
 
 # OS generated files #
 ######################

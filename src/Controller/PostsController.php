@@ -3,11 +3,26 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Event\EventInterface;
+
 /**
  * Posts Controller
  */
 class PostsController extends AppController
 {
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        $action = $this->request->getParam('action');
+        $identity = $this->request->getAttribute('identity');
+        $canManage = $identity && in_array($identity->get('role'), ['admin', 'teacher'], true);
+
+        if (in_array($action, ['add', 'edit'], true) || ($action === 'index' && $canManage)) {
+            $this->viewBuilder()->setLayout('dashboard');
+        }
+    }
+
     /**
      * Index method
      *

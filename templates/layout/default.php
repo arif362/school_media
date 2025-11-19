@@ -11,6 +11,9 @@ $primaryNav = [
     ['label' => 'Map', 'url' => $this->Url->build('/') . '#map'],
     ['label' => 'Stories', 'url' => $this->Url->build('/posts')],
 ];
+if (!empty($this->request->getAttribute('identity')) && $this->request->getAttribute('identity')->role === 'admin') {
+    $primaryNav[] = ['label' => 'Dashboard', 'url' => $this->Url->build('/admin/dashboard')];
+}
 $footerColumns = [
     [
         'title' => 'Studios & Labs',
@@ -61,9 +64,34 @@ $footerColumns = [
                     <a href="<?= h($link['url']) ?>"><?= h($link['label']) ?></a>
                 <?php endforeach; ?>
             </nav>
-            <a class="btn btn--ghost hide-mobile" href="<?= $this->Url->build('/') ?>#contact">Get Started</a>
+            <div class="header-cta hide-mobile">
+                <?php if (!empty($this->request->getAttribute('identity'))): ?>
+                    <span class="nav-login">
+                        <span class="nav-login__icon" aria-hidden="true">👤</span>
+                        <span><?= h($this->request->getAttribute('identity')->get('name') ?? __('Logged in')) ?></span>
+                    </span>
+                    <a class="btn btn--ghost" href="<?= $this->Url->build('/logout') ?>"><?= __('Logout') ?></a>
+                <?php else: ?>
+                    <a class="nav-login" href="<?= $this->Url->build('/login') ?>">
+                        <span class="nav-login__icon" aria-hidden="true">👤</span>
+                        <span><?= __('Login') ?></span>
+                    </a>
+                    <a class="btn btn--ghost" href="<?= $this->Url->build('/') ?>#contact">Get Started</a>
+                <?php endif; ?>
+            </div>
         </div>
     </header>
+    <div id="mobile-nav" class="mobile-nav" data-nav-panel>
+        <?php foreach ($primaryNav as $link): ?>
+            <a class="mobile-nav__link" href="<?= h($link['url']) ?>"><?= h($link['label']) ?></a>
+        <?php endforeach; ?>
+        <?php if (!empty($this->request->getAttribute('identity'))): ?>
+            <a class="btn btn--solid w-full justify-center" href="<?= $this->Url->build('/logout') ?>"><?= __('Logout') ?></a>
+        <?php else: ?>
+            <a class="btn btn--solid w-full justify-center" href="<?= $this->Url->build('/login') ?>"><?= __('Login') ?></a>
+            <a href="<?= $this->Url->build('/') ?>#contact" class="btn btn--ghost w-full justify-center">Get Started</a>
+        <?php endif; ?>
+    </div>
 
     <main class="page-content">
         <div class="toast-stack" aria-live="polite" aria-atomic="true">

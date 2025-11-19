@@ -3,9 +3,13 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use ArrayObject;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
 use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Utility\Text;
 use Cake\Validation\Validator;
 
 /**
@@ -61,8 +65,7 @@ class PostsTable extends Table
         $validator
             ->scalar('slug')
             ->maxLength('slug', 200)
-            ->requirePresence('slug', 'create')
-            ->notEmptyString('slug');
+            ->allowEmptyString('slug');
 
         $validator
             ->scalar('body')
@@ -101,6 +104,40 @@ class PostsTable extends Table
         return $query
             ->where(['Posts.published' => true])
             ->orderDesc('Posts.created');
+    }
+
+    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
+    {
+        $slug = trim((string)$entity->slug);
+        if ($slug === '') {
+            $title = (string)$entity->title;
+            $entity->slug = $this->generateUniqueSlug($title ?: Text::uuid(), $entity->id);
+        }
+    }
+
+    protected function generateUniqueSlug(string $value, $excludeId = null): string
+    {
+        $base = Text::slug(mb_strtolower($value)) ?: 'post';
+        $base = mb_substr($base, 0, 190);
+        $slug = $base;
+        $suffix = 1;
+
+        while ($this->slugExists($slug, $excludeId)) {
+            $slug = mb_substr($base, 0, 190 - (strlen((string)$suffix) + 1)) . '-' . $suffix;
+            $suffix++;
+        }
+
+        return $slug;
+    }
+
+    protected function slugExists(string $slug, $excludeId = null): bool
+    {
+        $conditions = ['slug' => $slug];
+        if ($excludeId !== null) {
+            $conditions['id !='] = $excludeId;
+        }
+
+        return $this->exists($conditions);
     }
 }
 
