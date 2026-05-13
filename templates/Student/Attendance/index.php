@@ -172,11 +172,13 @@ $monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'
                 </table>
 
                 <div class="pagination-wrapper">
-                    <?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+                    <span class="pagination-info">
+                        <?= $this->Paginator->counter(__('Showing {{start}} to {{end}} of {{count}} records')) ?>
+                    </span>
                     <div class="pagination">
-                        <?= $this->Paginator->prev('< ' . __('Previous')) ?>
-                        <?= $this->Paginator->numbers() ?>
-                        <?= $this->Paginator->next(__('Next') . ' >') ?>
+                        <?= $this->Paginator->prev(__('Previous'), ['class' => 'prev']) ?>
+                        <?= $this->Paginator->numbers(['modulus' => 4]) ?>
+                        <?= $this->Paginator->next(__('Next'), ['class' => 'next']) ?>
                     </div>
                 </div>
             <?php endif; ?>
