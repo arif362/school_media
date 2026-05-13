@@ -90,7 +90,7 @@ $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identi
                     </div>
                     <div class="admin-sidebar__brand-text">
                         <span class="admin-sidebar__brand-name">School Media</span>
-                        <span class="admin-sidebar__brand-tag">Admin Panel</span>
+                        <span class="admin-sidebar__brand-tag">Administration</span>
                     </div>
                 </a>
             </div>
