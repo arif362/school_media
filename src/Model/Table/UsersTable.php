@@ -44,6 +44,33 @@ class UsersTable extends Table
             ->requirePresence('role', 'create')
             ->notEmptyString('role');
 
+        $validator
+            ->scalar('bio')
+            ->allowEmptyString('bio');
+
+        $validator
+            ->scalar('avatar')
+            ->maxLength('avatar', 255)
+            ->allowEmptyString('avatar');
+
+        $validator
+            ->scalar('phone')
+            ->maxLength('phone', 20)
+            ->allowEmptyString('phone');
+
+        $validator
+            ->scalar('address')
+            ->allowEmptyString('address');
+
+        $validator
+            ->date('date_of_birth')
+            ->allowEmptyDate('date_of_birth');
+
+        $validator
+            ->scalar('grade_level')
+            ->maxLength('grade_level', 50)
+            ->allowEmptyString('grade_level');
+
         return $validator;
     }
 

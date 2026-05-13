@@ -11,8 +11,15 @@ $primaryNav = [
     ['label' => 'Map', 'url' => $this->Url->build('/') . '#map'],
     ['label' => 'Stories', 'url' => $this->Url->build('/posts')],
 ];
-if (!empty($this->request->getAttribute('identity')) && $this->request->getAttribute('identity')->role === 'admin') {
-    $primaryNav[] = ['label' => 'Dashboard', 'url' => $this->Url->build('/admin/dashboard')];
+$identity = $this->request->getAttribute('identity');
+if (!empty($identity)) {
+    if ($identity->role === 'admin') {
+        $primaryNav[] = ['label' => 'Dashboard', 'url' => $this->Url->build('/admin')];
+    } elseif ($identity->role === 'teacher') {
+        $primaryNav[] = ['label' => 'Dashboard', 'url' => $this->Url->build('/admin')];
+    } elseif ($identity->role === 'student') {
+        $primaryNav[] = ['label' => 'My Portal', 'url' => $this->Url->build('/student')];
+    }
 }
 $footerColumns = [
     [
@@ -66,9 +73,26 @@ $footerColumns = [
             </nav>
             <div class="header-cta hide-mobile">
                 <?php if (!empty($this->request->getAttribute('identity'))): ?>
+                    <?php
+                    $userNotificationsTable = \Cake\ORM\TableRegistry::getTableLocator()->get('UserNotifications');
+                    $notificationCount = $userNotificationsTable->getUnreadCount(
+                        $this->request->getAttribute('identity')->id,
+                        $this->request->getAttribute('identity')->role
+                    );
+                    ?>
+                    <?= $this->element('notification_bell', ['unreadCount' => $notificationCount]) ?>
+                    <?php
+                    $userAvatar = $this->request->getAttribute('identity')->get('avatar');
+                    $userName = $this->request->getAttribute('identity')->get('name') ?? __('Logged in');
+                    $userInitial = strtoupper(substr((string)$userName, 0, 1)) ?: 'U';
+                    ?>
                     <span class="nav-login">
-                        <span class="nav-login__icon" aria-hidden="true">👤</span>
-                        <span><?= h($this->request->getAttribute('identity')->get('name') ?? __('Logged in')) ?></span>
+                        <?php if ($userAvatar): ?>
+                            <img src="<?= $this->Url->image($userAvatar) ?>" alt="<?= h($userName) ?>" class="nav-login__avatar">
+                        <?php else: ?>
+                            <span class="nav-login__initial"><?= $userInitial ?></span>
+                        <?php endif; ?>
+                        <span><?= h($userName) ?></span>
                     </span>
                     <a class="btn btn--ghost" href="<?= $this->Url->build('/logout') ?>"><?= __('Logout') ?></a>
                 <?php else: ?>

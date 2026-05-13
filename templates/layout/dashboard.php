@@ -5,14 +5,22 @@
 $identity = $this->request->getAttribute('identity');
 $identityName = $identity?->get('name') ?? __('Content Lead');
 $identityRole = $identity?->get('role') ?? 'admin';
+$identityAvatar = $identity?->get('avatar');
 $identityInitial = strtoupper(substr((string)$identityName, 0, 1)) ?: 'A';
 $navLinks = [
     ['label' => __('Dashboard'), 'url' => $this->Url->build('/admin')],
     ['label' => __('Posts'), 'url' => $this->Url->build('/posts')],
+    ['label' => __('Classes'), 'url' => $this->Url->build('/admin/classes')],
+    ['label' => __('Subjects'), 'url' => $this->Url->build('/admin/subjects')],
+    ['label' => __('Courses'), 'url' => $this->Url->build('/admin/courses')],
+    ['label' => __('Attendance'), 'url' => $this->Url->build('/admin/attendance')],
+    ['label' => __('Notifications'), 'url' => $this->Url->build('/admin/notifications')],
     ['label' => __('Teachers'), 'url' => '#'],
     ['label' => __('Students'), 'url' => '#'],
     ['label' => __('Settings'), 'url' => '#'],
 ];
+$userNotificationsTable = \Cake\ORM\TableRegistry::getTableLocator()->get('UserNotifications');
+$notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identity->id, $identity->role) : 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +44,11 @@ $navLinks = [
             <div class="dashboard-sidebar__inner">
                 <a class="dashboard-sidebar__brand" href="<?= $this->Url->build('/') ?>">School Media</a>
                 <div class="dashboard-profile">
-                    <span class="dashboard-avatar"><?= $identityInitial ?></span>
+                    <?php if ($identityAvatar): ?>
+                        <img src="<?= $this->Url->image($identityAvatar) ?>" alt="<?= h($identityName) ?>" class="dashboard-avatar-img">
+                    <?php else: ?>
+                        <span class="dashboard-avatar"><?= $identityInitial ?></span>
+                    <?php endif; ?>
                     <div>
                         <strong><?= h($identityName) ?></strong>
                         <p><?= h(ucfirst($identityRole)) ?></p>
@@ -55,6 +67,7 @@ $navLinks = [
 
         <main class="dashboard-main">
             <div class="dashboard-main__top-actions">
+                <?= $this->element('notification_bell', ['unreadCount' => $notificationCount]) ?>
                 <?= $this->Html->link(__('View site →'), '/', ['class' => 'dashboard-main__link']) ?>
             </div>
             <header class="dashboard-header">

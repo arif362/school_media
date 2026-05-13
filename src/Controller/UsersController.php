@@ -29,7 +29,16 @@ class UsersController extends AppController
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
         if ($result && $result->isValid()) {
-            $redirect = $this->Authentication->getLoginRedirect() ?? '/admin/dashboard';
+            $redirect = $this->Authentication->getLoginRedirect();
+
+            if (!$redirect) {
+                $user = $this->request->getAttribute('identity');
+                $redirect = match ($user->role) {
+                    'admin', 'teacher' => '/admin',
+                    'student' => '/student',
+                    default => '/',
+                };
+            }
 
             return $this->redirect($redirect);
         }

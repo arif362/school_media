@@ -87,6 +87,18 @@ return function (RouteBuilder $routes): void {
         $builder->fallbacks();
     });
 
+    $routes->prefix('student', function (RouteBuilder $builder): void {
+        $builder->connect('/', ['controller' => 'Dashboard', 'action' => 'index']);
+        $builder->connect('/profile', ['controller' => 'Profile', 'action' => 'view']);
+        $builder->connect('/profile/edit', ['controller' => 'Profile', 'action' => 'edit']);
+        $builder->fallbacks();
+    });
+
+    $routes->prefix('teacher', function (RouteBuilder $builder): void {
+        $builder->connect('/', ['controller' => 'Dashboard', 'action' => 'index']);
+        $builder->fallbacks();
+    });
+
     /*
      * If you need a different set of middleware or none at all,
      * open new scope and define routes there.

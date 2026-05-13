@@ -30,13 +30,46 @@ class PostsController extends AppController
      */
     public function index(): void
     {
+        $identity = $this->request->getAttribute('identity');
+        $canManage = $identity && in_array($identity->get('role'), ['admin', 'teacher'], true);
+
         $query = $this->Posts
             ->find()
             ->orderByDesc('Posts.created');
 
+        // Filter by search term
+        $search = $this->request->getQuery('search');
+        if ($search) {
+            $query->where([
+                'OR' => [
+                    'Posts.title LIKE' => '%' . $search . '%',
+                    'Posts.body LIKE' => '%' . $search . '%',
+                ],
+            ]);
+        }
+
+        // Filter by status (for admin/teacher)
+        $status = $this->request->getQuery('status');
+        if ($canManage && $status !== null && $status !== '') {
+            $query->where(['Posts.published' => $status === 'published']);
+        } elseif (!$canManage) {
+            // Non-admin users only see published posts
+            $query->where(['Posts.published' => true]);
+        }
+
+        $this->paginate = [
+            'limit' => 10,
+            'order' => ['Posts.created' => 'DESC'],
+        ];
+
         $posts = $this->paginate($query);
 
-        $this->set(compact('posts'));
+        // Get counts for filters
+        $totalCount = $this->Posts->find()->count();
+        $publishedCount = $this->Posts->find()->where(['published' => true])->count();
+        $draftCount = $this->Posts->find()->where(['published' => false])->count();
+
+        $this->set(compact('posts', 'search', 'status', 'canManage', 'totalCount', 'publishedCount', 'draftCount'));
     }
 
     /**
