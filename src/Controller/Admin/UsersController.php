@@ -363,7 +363,7 @@ class UsersController extends AdminAppController
             $studentClasses = $studentClassesTable->find()
                 ->contain(['Classes'])
                 ->where(['StudentClasses.student_id' => $id])
-                ->orderBy(['StudentClasses.academic_year' => 'DESC'])
+                ->orderBy(['Classes.academic_year' => 'DESC', 'StudentClasses.enrolled_date' => 'DESC'])
                 ->all();
 
             // Get student's courses with grades

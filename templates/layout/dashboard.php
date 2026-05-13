@@ -3,22 +3,25 @@
  * @var \App\View\AppView $this
  */
 $identity = $this->request->getAttribute('identity');
-$identityName = $identity?->get('name') ?? __('Content Lead');
+$identityName = $identity?->get('name') ?? __('Admin User');
 $identityRole = $identity?->get('role') ?? 'admin';
 $identityAvatar = $identity?->get('avatar');
 $identityInitial = strtoupper(substr((string)$identityName, 0, 1)) ?: 'A';
+$currentUrl = $this->request->getUri()->getPath();
+
 $navLinks = [
-    ['label' => __('Dashboard'), 'url' => $this->Url->build('/admin'), 'icon' => '&#127968;'],
-    ['label' => __('Posts'), 'url' => $this->Url->build('/posts'), 'icon' => '&#128196;'],
-    ['label' => __('Classes'), 'url' => $this->Url->build('/admin/classes'), 'icon' => '&#127979;'],
-    ['label' => __('Subjects'), 'url' => $this->Url->build('/admin/subjects'), 'icon' => '&#128218;'],
-    ['label' => __('Courses'), 'url' => $this->Url->build('/admin/courses'), 'icon' => '&#128214;'],
-    ['label' => __('Attendance'), 'url' => $this->Url->build('/admin/attendance'), 'icon' => '&#128197;'],
-    ['label' => __('Notifications'), 'url' => $this->Url->build('/admin/notifications'), 'icon' => '&#128276;'],
-    ['label' => __('Teachers'), 'url' => $this->Url->build('/admin/users/teachers'), 'icon' => '&#128104;&#8205;&#127979;'],
-    ['label' => __('Students'), 'url' => $this->Url->build('/admin/users/students'), 'icon' => '&#128100;'],
-    ['label' => __('All Users'), 'url' => $this->Url->build('/admin/users'), 'icon' => '&#128101;'],
+    ['label' => __('Dashboard'), 'url' => '/admin', 'icon' => '&#127968;'],
+    ['label' => __('Posts'), 'url' => '/posts', 'icon' => '&#128196;'],
+    ['label' => __('Classes'), 'url' => '/admin/classes', 'icon' => '&#127979;'],
+    ['label' => __('Subjects'), 'url' => '/admin/subjects', 'icon' => '&#128218;'],
+    ['label' => __('Courses'), 'url' => '/admin/courses', 'icon' => '&#128214;'],
+    ['label' => __('Attendance'), 'url' => '/admin/attendance', 'icon' => '&#128197;'],
+    ['label' => __('Notifications'), 'url' => '/admin/notifications', 'icon' => '&#128276;'],
+    ['label' => __('Teachers'), 'url' => '/admin/users/teachers', 'icon' => '&#128104;&#8205;&#127979;'],
+    ['label' => __('Students'), 'url' => '/admin/users/students', 'icon' => '&#127891;'],
+    ['label' => __('All Users'), 'url' => '/admin/users', 'icon' => '&#128101;'],
 ];
+
 $userNotificationsTable = \Cake\ORM\TableRegistry::getTableLocator()->get('UserNotifications');
 $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identity->id, $identity->role) : 0;
 ?>
@@ -39,78 +42,81 @@ $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identi
     <?= $this->fetch('css') ?>
 </head>
 <body class="sm-body dashboard-body">
-    <div class="dashboard-shell">
-        <aside class="dashboard-sidebar">
-            <div class="dashboard-sidebar__inner">
-                <a class="dashboard-sidebar__brand" href="<?= $this->Url->build('/') ?>">School Media</a>
-                <div class="dashboard-profile">
-                    <?php if ($identityAvatar): ?>
-                        <img src="<?= $this->Url->image($identityAvatar) ?>" alt="<?= h($identityName) ?>" class="dashboard-avatar-img">
-                    <?php else: ?>
-                        <span class="dashboard-avatar"><?= $identityInitial ?></span>
-                    <?php endif; ?>
-                    <div>
-                        <strong><?= h($identityName) ?></strong>
-                        <p><?= h(ucfirst($identityRole)) ?></p>
-                    </div>
-                </div>
-                <nav class="dashboard-nav">
-                    <?php foreach ($navLinks as $link): ?>
-                        <a class="dashboard-nav__link" href="<?= h($link['url']) ?>">
-                            <?php if (!empty($link['icon'])): ?>
-                                <span class="nav-icon"><?= $link['icon'] ?></span>
-                            <?php endif; ?>
-                            <?= h($link['label']) ?>
-                        </a>
-                    <?php endforeach; ?>
-                </nav>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar__header">
+                <a class="admin-sidebar__brand" href="<?= $this->Url->build('/') ?>">
+                    <span class="admin-sidebar__logo">&#127979;</span>
+                    <span>School Media</span>
+                </a>
             </div>
-            <div class="dashboard-sidebar__cta">
-                <a class="btn btn--ghost w-full" href="<?= $this->Url->build('/logout') ?>"><?= __('Logout') ?></a>
+
+            <div class="admin-sidebar__profile">
+                <?php if ($identityAvatar): ?>
+                    <img src="<?= $this->Url->image($identityAvatar) ?>" alt="<?= h($identityName) ?>" class="admin-sidebar__avatar">
+                <?php else: ?>
+                    <span class="admin-sidebar__avatar"><?= $identityInitial ?></span>
+                <?php endif; ?>
+                <div class="admin-sidebar__user">
+                    <strong><?= h($identityName) ?></strong>
+                    <span><?= h(ucfirst($identityRole)) ?></span>
+                </div>
+            </div>
+
+            <nav class="admin-sidebar__nav">
+                <?php foreach ($navLinks as $link): ?>
+                    <?php $isActive = $currentUrl === $link['url'] || ($link['url'] !== '/admin' && str_starts_with($currentUrl, $link['url'])); ?>
+                    <a class="admin-sidebar__link<?= $isActive ? ' is-active' : '' ?>" href="<?= $this->Url->build($link['url']) ?>">
+                        <span class="admin-sidebar__icon"><?= $link['icon'] ?></span>
+                        <?= h($link['label']) ?>
+                    </a>
+                <?php endforeach; ?>
+            </nav>
+
+            <div class="admin-sidebar__footer">
+                <a class="admin-sidebar__link admin-sidebar__link--logout" href="<?= $this->Url->build('/logout') ?>">
+                    <span class="admin-sidebar__icon">&#128682;</span>
+                    <?= __('Logout') ?>
+                </a>
             </div>
         </aside>
 
-        <main class="dashboard-main">
-            <div class="dashboard-main__top-actions">
-                <?= $this->element('notification_bell', ['unreadCount' => $notificationCount]) ?>
-                <?= $this->Html->link(__('View site →'), '/', ['class' => 'dashboard-main__link']) ?>
-            </div>
-            <?php if ($this->fetch('dashboardTitle') || $this->fetch('dashboardSubtitle') || $this->fetch('dashboardActions')): ?>
-            <header class="dashboard-header">
-                <div>
-                    <?php if ($this->fetch('dashboardEyebrow')): ?>
-                        <p class="eyebrow text-muted"><?= $this->fetch('dashboardEyebrow') ?></p>
-                    <?php endif; ?>
-                    <?php if ($this->fetch('dashboardTitle')): ?>
-                        <h1><?= $this->fetch('dashboardTitle') ?></h1>
-                    <?php endif; ?>
-                    <?php if ($this->fetch('dashboardSubtitle')): ?>
-                        <p><?= $this->fetch('dashboardSubtitle') ?></p>
-                    <?php endif; ?>
+        <!-- Main Content -->
+        <div class="admin-main">
+            <!-- Top Bar -->
+            <header class="admin-topbar">
+                <button class="admin-topbar__toggle" id="sidebarToggle" type="button">
+                    <span></span><span></span><span></span>
+                </button>
+
+                <div class="admin-topbar__spacer"></div>
+
+                <div class="admin-topbar__actions">
+                    <a href="<?= $this->Url->build('/') ?>" class="admin-topbar__btn" target="_blank" title="<?= __('View Site') ?>">
+                        <span>&#127760;</span>
+                        <span class="admin-topbar__btn-text"><?= __('View Site') ?></span>
+                    </a>
+                    <?= $this->element('notification_bell', ['unreadCount' => $notificationCount]) ?>
                 </div>
-                <?php if (trim($this->fetch('dashboardActions')) !== ''): ?>
-                    <div class="dashboard-header__actions">
-                        <?= $this->fetch('dashboardActions') ?>
-                    </div>
-                <?php endif; ?>
             </header>
-            <?php endif; ?>
 
-            <?php if (trim($this->fetch('breadcrumbs')) !== ''): ?>
-                <div class="dashboard-breadcrumbs">
-                    <?= $this->fetch('breadcrumbs') ?>
+            <!-- Content Area -->
+            <main class="admin-content">
+                <div class="toast-stack" aria-live="polite" aria-atomic="true">
+                    <?= $this->Flash->render() ?>
                 </div>
-            <?php endif; ?>
 
-            <div class="toast-stack" aria-live="polite" aria-atomic="true">
-                <?= $this->Flash->render() ?>
-            </div>
-
-            <?= $this->fetch('content') ?>
-        </main>
+                <?= $this->fetch('content') ?>
+            </main>
+        </div>
     </div>
 
+    <script>
+    document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+        document.querySelector('.admin-layout').classList.toggle('sidebar-open');
+    });
+    </script>
     <?= $this->fetch('script') ?>
 </body>
 </html>
-
