@@ -73,6 +73,14 @@ $footerColumns = [
             </nav>
             <div class="header-cta hide-mobile">
                 <?php if (!empty($this->request->getAttribute('identity'))): ?>
+                    <?php
+                    $userNotificationsTable = \Cake\ORM\TableRegistry::getTableLocator()->get('UserNotifications');
+                    $notificationCount = $userNotificationsTable->getUnreadCount(
+                        $this->request->getAttribute('identity')->id,
+                        $this->request->getAttribute('identity')->role
+                    );
+                    ?>
+                    <?= $this->element('notification_bell', ['unreadCount' => $notificationCount]) ?>
                     <span class="nav-login">
                         <span class="nav-login__icon" aria-hidden="true">👤</span>
                         <span><?= h($this->request->getAttribute('identity')->get('name') ?? __('Logged in')) ?></span>

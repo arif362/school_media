@@ -12,8 +12,11 @@ $navLinks = [
     ['label' => __('Dashboard'), 'url' => '/student', 'icon' => '&#127968;'],
     ['label' => __('My Profile'), 'url' => '/student/profile', 'icon' => '&#128100;'],
     ['label' => __('Edit Profile'), 'url' => '/student/profile/edit', 'icon' => '&#9998;'],
+    ['label' => __('Notifications'), 'url' => '/notifications', 'icon' => '&#128276;'],
     ['label' => __('Browse Posts'), 'url' => '/posts', 'icon' => '&#128196;'],
 ];
+$userNotificationsTable = \Cake\ORM\TableRegistry::getTableLocator()->get('UserNotifications');
+$notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identity->id, $identity->role) : 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,6 +72,7 @@ $navLinks = [
 
         <main class="dashboard-main">
             <div class="dashboard-main__top-actions">
+                <?= $this->element('notification_bell', ['unreadCount' => $notificationCount]) ?>
                 <?= $this->Html->link(__('View site'), '/', ['class' => 'dashboard-main__link']) ?>
             </div>
             <header class="dashboard-header">
