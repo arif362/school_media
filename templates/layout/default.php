@@ -11,8 +11,15 @@ $primaryNav = [
     ['label' => 'Map', 'url' => $this->Url->build('/') . '#map'],
     ['label' => 'Stories', 'url' => $this->Url->build('/posts')],
 ];
-if (!empty($this->request->getAttribute('identity')) && $this->request->getAttribute('identity')->role === 'admin') {
-    $primaryNav[] = ['label' => 'Dashboard', 'url' => $this->Url->build('/admin/dashboard')];
+$identity = $this->request->getAttribute('identity');
+if (!empty($identity)) {
+    if ($identity->role === 'admin') {
+        $primaryNav[] = ['label' => 'Dashboard', 'url' => $this->Url->build('/admin')];
+    } elseif ($identity->role === 'teacher') {
+        $primaryNav[] = ['label' => 'Dashboard', 'url' => $this->Url->build('/admin')];
+    } elseif ($identity->role === 'student') {
+        $primaryNav[] = ['label' => 'My Portal', 'url' => $this->Url->build('/student')];
+    }
 }
 $footerColumns = [
     [

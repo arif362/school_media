@@ -13,6 +13,12 @@ class User extends Entity
         'password' => true,
         'role' => true,
         'active' => true,
+        'bio' => true,
+        'avatar' => true,
+        'phone' => true,
+        'address' => true,
+        'date_of_birth' => true,
+        'grade_level' => true,
         'created' => true,
         'modified' => true,
     ];
