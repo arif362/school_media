@@ -11,6 +11,8 @@ $navLinks = [
     ['label' => __('Dashboard'), 'url' => $this->Url->build('/admin')],
     ['label' => __('Posts'), 'url' => $this->Url->build('/posts')],
     ['label' => __('Classes'), 'url' => $this->Url->build('/admin/classes')],
+    ['label' => __('Subjects'), 'url' => $this->Url->build('/admin/subjects')],
+    ['label' => __('Courses'), 'url' => $this->Url->build('/admin/courses')],
     ['label' => __('Attendance'), 'url' => $this->Url->build('/admin/attendance')],
     ['label' => __('Notifications'), 'url' => $this->Url->build('/admin/notifications')],
     ['label' => __('Teachers'), 'url' => '#'],

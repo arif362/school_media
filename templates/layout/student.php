@@ -10,6 +10,7 @@ $identityInitial = strtoupper(substr((string)$identityName, 0, 1)) ?: 'S';
 $currentUrl = $this->request->getRequestTarget();
 $navLinks = [
     ['label' => __('Dashboard'), 'url' => '/student', 'icon' => '&#127968;'],
+    ['label' => __('My Courses'), 'url' => '/student/courses', 'icon' => '&#128218;'],
     ['label' => __('My Attendance'), 'url' => '/student/attendance', 'icon' => '&#128197;'],
     ['label' => __('My Profile'), 'url' => '/student/profile', 'icon' => '&#128100;'],
     ['label' => __('Edit Profile'), 'url' => '/student/profile/edit', 'icon' => '&#9998;'],

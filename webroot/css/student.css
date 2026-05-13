@@ -529,7 +529,563 @@
     margin-top: 0.35rem;
 }
 
+/* Student Courses Page */
+.student-courses {
+    padding: 0;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.stats-grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.stats-grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Stat Card */
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--sm-white);
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(15, 31, 58, 0.08);
+}
+
+.stat-card__icon {
+    font-size: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 31, 58, 0.05);
+    border-radius: 12px;
+}
+
+.stat-card__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-card__value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--sm-navy);
+}
+
+.stat-card__label {
+    font-size: 0.875rem;
+    color: var(--sm-muted);
+}
+
+.stat-card--primary .stat-card__icon {
+    background: rgba(58, 123, 213, 0.15);
+}
+
+.stat-card--info .stat-card__icon {
+    background: rgba(0, 210, 255, 0.15);
+}
+
+.stat-card--success .stat-card__icon {
+    background: rgba(61, 187, 120, 0.15);
+}
+
+.stat-card--warning .stat-card__icon {
+    background: rgba(252, 191, 73, 0.15);
+}
+
+/* Admin Card (reused in student) */
+.admin-card {
+    background: var(--sm-white);
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(15, 31, 58, 0.08);
+    overflow: hidden;
+}
+
+.admin-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(15, 31, 58, 0.08);
+    background: rgba(247, 249, 252, 0.5);
+}
+
+.admin-card__header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--sm-navy);
+}
+
+.admin-card__body {
+    padding: 1.25rem;
+}
+
+/* Course Grid */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+/* Course Card */
+.course-card {
+    background: var(--sm-white);
+    border-radius: 1rem;
+    border: 1px solid rgba(15, 31, 58, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.course-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(15, 31, 58, 0.12);
+}
+
+.course-card--student {
+    border: 1px solid rgba(58, 123, 213, 0.15);
+}
+
+.course-card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(58, 123, 213, 0.08), rgba(0, 210, 255, 0.08));
+    border-bottom: 1px solid rgba(58, 123, 213, 0.1);
+}
+
+.course-card__icon {
+    font-size: 2rem;
+}
+
+.course-card__info h4 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.1rem;
+    color: var(--sm-navy);
+}
+
+.course-card__info p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--sm-muted);
+}
+
+.course-card__body {
+    padding: 1.25rem;
+}
+
+.course-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--sm-muted);
+}
+
+.course-card__meta strong {
+    color: var(--sm-navy);
+}
+
+.course-card__grade {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(15, 31, 58, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.course-card__footer {
+    padding: 1rem 1.25rem;
+    background: rgba(247, 249, 252, 0.5);
+    border-top: 1px solid rgba(15, 31, 58, 0.06);
+}
+
+/* Grade Badge */
+.grade-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    padding: 0.25rem 0.5rem;
+    background: linear-gradient(135deg, #3a7bd5 0%, #0d47a1 100%);
+    color: white;
+    font-weight: 700;
+    border-radius: 6px;
+    font-size: 0.875rem;
+}
+
+.grade-badge--lg {
+    min-width: 3rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 1.25rem;
+}
+
+.grade-badge--xl {
+    min-width: 4rem;
+    padding: 0.75rem 1rem;
+    font-size: 1.5rem;
+    border-radius: 10px;
+}
+
+.marks-display {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--sm-navy);
+}
+
+.marks-display--lg {
+    font-size: 1.5rem;
+}
+
+/* Admin Table */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 0.875rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(15, 31, 58, 0.08);
+}
+
+.admin-table th {
+    background: rgba(247, 249, 252, 0.5);
+    font-weight: 600;
+    color: var(--sm-muted);
+    font-size: 0.875rem;
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(247, 249, 252, 0.5);
+}
+
+/* Table Responsive */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+}
+
+.empty-state__icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--sm-navy);
+}
+
+.empty-state p {
+    margin: 0 0 1.5rem 0;
+    color: var(--sm-muted);
+}
+
+/* Course View */
+.student-course-view {
+    padding: 0;
+}
+
+.course-header-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(58, 123, 213, 0.1), rgba(0, 210, 255, 0.1));
+    border-radius: 1rem;
+    border: 1px solid rgba(58, 123, 213, 0.15);
+}
+
+.course-header-card__icon {
+    font-size: 3rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(15, 31, 58, 0.1);
+}
+
+.course-header-card__content {
+    flex: 1;
+}
+
+.course-header-card__content h2 {
+    margin: 0 0 0.25rem 0;
+    color: var(--sm-navy);
+}
+
+.course-header-card__content > p {
+    margin: 0 0 1rem 0;
+}
+
+.course-header-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.course-header-card__meta strong {
+    color: var(--sm-muted);
+}
+
+.course-header-card__grade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(15, 31, 58, 0.1);
+}
+
+/* Admin Grid */
+.admin-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.admin-grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* Detail Table */
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.detail-table th,
+.detail-table td {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(15, 31, 58, 0.08);
+    text-align: left;
+}
+
+.detail-table th {
+    width: 40%;
+    color: var(--sm-muted);
+    font-weight: 500;
+}
+
+.detail-table tr:last-child th,
+.detail-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Progress Display */
+.progress-display {
+    padding: 1rem 0;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 12px;
+    background: rgba(15, 31, 58, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+    border-radius: 999px;
+    transition: width 0.5s ease;
+}
+
+.progress-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+}
+
+.progress-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--sm-navy);
+}
+
+.progress-grade {
+    font-size: 0.9rem;
+    color: var(--sm-muted);
+}
+
+.grade-only-display {
+    text-align: center;
+    padding: 1rem;
+}
+
+.no-grades {
+    text-align: center;
+    padding: 1rem;
+}
+
+.teacher-remarks {
+    padding: 1rem;
+    background: rgba(252, 191, 73, 0.1);
+    border-radius: 0.75rem;
+}
+
+.teacher-remarks h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    color: var(--sm-muted);
+}
+
+.teacher-remarks p {
+    margin: 0;
+}
+
+/* Syllabus Content */
+.syllabus-content {
+    padding: 1rem;
+    background: rgba(247, 249, 252, 0.5);
+    border-radius: 0.75rem;
+    line-height: 1.7;
+}
+
+/* Materials List */
+.materials-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.material-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(247, 249, 252, 0.5);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(15, 31, 58, 0.06);
+}
+
+.material-icon {
+    font-size: 1.5rem;
+    width: 2.5rem;
+    text-align: center;
+}
+
+.material-info {
+    flex: 1;
+}
+
+.material-info strong {
+    display: block;
+    color: var(--sm-navy);
+}
+
+.material-info p {
+    margin: 0.25rem 0;
+    font-size: 0.875rem;
+}
+
+.material-actions {
+    flex-shrink: 0;
+}
+
+/* Classmates Grid */
+.classmates-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.classmate-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(247, 249, 252, 0.5);
+    border-radius: 999px;
+    font-size: 0.875rem;
+}
+
+/* User Avatar */
+.user-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+    color: white;
+    font-weight: 600;
+    border-radius: 50%;
+}
+
+.user-avatar--sm {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.875rem;
+}
+
+/* Badge Additions */
+.badge--info {
+    background: rgba(0, 210, 255, 0.15);
+    color: #0077aa;
+}
+
+.badge--warning {
+    background: rgba(252, 191, 73, 0.15);
+    color: #b8860b;
+}
+
+.badge--danger {
+    background: rgba(215, 66, 66, 0.15);
+    color: #d74242;
+}
+
+.badge--secondary {
+    background: rgba(15, 31, 58, 0.1);
+    color: var(--sm-muted);
+}
+
+/* Spacing utilities */
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.w-full {
+    width: 100%;
+}
+
 /* Responsive */
+@media (max-width: 1024px) {
+    .stats-grid--4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-grid--2 {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 768px) {
     .profile-card__header {
         flex-direction: column;
@@ -551,6 +1107,25 @@
     }
 
     .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course-header-card {
+        flex-direction: column;
+    }
+
+    .course-header-card__grade {
+        align-self: stretch;
+    }
+}
+
+@media (max-width: 640px) {
+    .stats-grid--3,
+    .stats-grid--4 {
+        grid-template-columns: 1fr;
+    }
+
+    .course-grid {
         grid-template-columns: 1fr;
     }
 }
