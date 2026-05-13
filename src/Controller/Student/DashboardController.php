@@ -14,6 +14,41 @@ class DashboardController extends StudentAppController
             ->limit(5)
             ->all();
 
-        $this->set(compact('user', 'recentPosts'));
+        // Get attendance summary for current academic year
+        $attendancesTable = $this->fetchTable('Attendances');
+        $currentYear = (int)date('Y');
+        $currentMonth = (int)date('m');
+
+        // Get overall year summary
+        $attendanceSummary = $attendancesTable->getStudentSummary($user->id, $currentYear);
+
+        // Get current month summary
+        $monthlyAttendance = $attendancesTable->getStudentSummary($user->id, $currentYear, $currentMonth);
+
+        // Get recent attendance records (last 10)
+        $recentAttendance = $attendancesTable->find()
+            ->where(['student_id' => $user->id])
+            ->contain(['Classes'])
+            ->orderByDesc('date')
+            ->limit(10)
+            ->all();
+
+        // Get student's current class info
+        $studentClass = null;
+        if ($user->class_id) {
+            $classesTable = $this->fetchTable('Classes');
+            $studentClass = $classesTable->get($user->class_id);
+        }
+
+        $this->set(compact(
+            'user',
+            'recentPosts',
+            'attendanceSummary',
+            'monthlyAttendance',
+            'recentAttendance',
+            'studentClass',
+            'currentYear',
+            'currentMonth'
+        ));
     }
 }

@@ -3,10 +3,20 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  * @var \Cake\ORM\ResultSet $recentPosts
+ * @var array $attendanceSummary
+ * @var array $monthlyAttendance
+ * @var \Cake\ORM\ResultSet $recentAttendance
+ * @var \App\Model\Entity\SchoolClass|null $studentClass
+ * @var int $currentYear
+ * @var int $currentMonth
  */
+use App\Model\Entity\Attendance;
+
 $this->assign('title', __('Student Dashboard'));
 $this->assign('dashboardTitle', __('Welcome back, {0}!', $user->name));
 $this->assign('dashboardSubtitle', __('Here\'s what\'s happening in your school media portal.'));
+
+$monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 ?>
 
 <div class="student-dashboard">
@@ -59,6 +69,11 @@ $this->assign('dashboardSubtitle', __('Here\'s what\'s happening in your school 
                         ['class' => 'quick-link', 'escape' => false]
                     ) ?>
                     <?= $this->Html->link(
+                        '<span class="quick-link__icon">&#128197;</span><span>' . __('My Attendance') . '</span>',
+                        ['controller' => 'Attendance', 'action' => 'index'],
+                        ['class' => 'quick-link', 'escape' => false]
+                    ) ?>
+                    <?= $this->Html->link(
                         '<span class="quick-link__icon">&#9881;</span><span>' . __('Edit Profile') . '</span>',
                         ['controller' => 'Profile', 'action' => 'edit'],
                         ['class' => 'quick-link', 'escape' => false]
@@ -67,6 +82,132 @@ $this->assign('dashboardSubtitle', __('Here\'s what\'s happening in your school 
             </div>
         </div>
     </div>
+
+    <!-- Attendance Summary Section -->
+    <div class="dashboard-grid attendance-section">
+        <div class="dashboard-card attendance-overview">
+            <div class="dashboard-card__header">
+                <h3><?= __('Attendance Overview') ?> - <?= $currentYear ?></h3>
+                <?= $this->Html->link(__('View Details'), ['controller' => 'Attendance', 'action' => 'index'], ['class' => 'btn btn--small btn--secondary']) ?>
+            </div>
+            <div class="dashboard-card__body">
+                <?php if ($studentClass): ?>
+                    <div class="class-info-badge">
+                        <span class="badge badge--info"><?= h($studentClass->name) ?> <?= $studentClass->section ? '(' . h($studentClass->section) . ')' : '' ?></span>
+                        <span class="badge badge--outline"><?= h($studentClass->grade_level) ?></span>
+                    </div>
+                <?php endif; ?>
+
+                <div class="attendance-stats">
+                    <div class="attendance-stat attendance-stat--main">
+                        <div class="attendance-percentage <?= $attendanceSummary['percentage'] >= 75 ? 'attendance-percentage--good' : ($attendanceSummary['percentage'] >= 50 ? 'attendance-percentage--warning' : 'attendance-percentage--danger') ?>">
+                            <span class="percentage-value"><?= $attendanceSummary['percentage'] ?>%</span>
+                            <span class="percentage-label"><?= __('Overall Attendance') ?></span>
+                        </div>
+                        <p class="attendance-stat__subtitle"><?= __('Total {0} school days recorded', $attendanceSummary['total']) ?></p>
+                    </div>
+
+                    <div class="attendance-breakdown">
+                        <div class="attendance-breakdown__item">
+                            <span class="count count--present"><?= $attendanceSummary['present'] ?></span>
+                            <span class="label"><?= __('Present') ?></span>
+                        </div>
+                        <div class="attendance-breakdown__item">
+                            <span class="count count--absent"><?= $attendanceSummary['absent'] ?></span>
+                            <span class="label"><?= __('Absent') ?></span>
+                        </div>
+                        <div class="attendance-breakdown__item">
+                            <span class="count count--late"><?= $attendanceSummary['late'] ?></span>
+                            <span class="label"><?= __('Late') ?></span>
+                        </div>
+                        <div class="attendance-breakdown__item">
+                            <span class="count count--excused"><?= $attendanceSummary['excused'] ?></span>
+                            <span class="label"><?= __('Excused') ?></span>
+                        </div>
+                    </div>
+                </div>
+
+                <?php if ($attendanceSummary['percentage'] < 75 && $attendanceSummary['total'] > 0): ?>
+                    <div class="attendance-alert alert alert--warning">
+                        <strong><?= __('Attendance Alert') ?>:</strong>
+                        <?= __('Your attendance is below 75%. Please try to improve your attendance to maintain good academic standing.') ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="dashboard-card monthly-summary">
+            <div class="dashboard-card__header">
+                <h3><?= __('This Month') ?> - <?= $monthNames[$currentMonth] ?></h3>
+            </div>
+            <div class="dashboard-card__body">
+                <div class="monthly-stats">
+                    <div class="monthly-stat">
+                        <span class="stat-value <?= $monthlyAttendance['percentage'] >= 75 ? 'text-success' : 'text-warning' ?>"><?= $monthlyAttendance['percentage'] ?>%</span>
+                        <span class="stat-label"><?= __('Attendance Rate') ?></span>
+                    </div>
+                    <div class="monthly-details">
+                        <div class="detail-row">
+                            <span><?= __('Days Present') ?></span>
+                            <span class="text-success"><?= $monthlyAttendance['present'] ?></span>
+                        </div>
+                        <div class="detail-row">
+                            <span><?= __('Days Absent') ?></span>
+                            <span class="text-danger"><?= $monthlyAttendance['absent'] ?></span>
+                        </div>
+                        <div class="detail-row">
+                            <span><?= __('Late Arrivals') ?></span>
+                            <span class="text-warning"><?= $monthlyAttendance['late'] ?></span>
+                        </div>
+                        <div class="detail-row">
+                            <span><?= __('Total Days') ?></span>
+                            <span><?= $monthlyAttendance['total'] ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Attendance Records -->
+    <?php if (!$recentAttendance->isEmpty()): ?>
+    <div class="dashboard-card recent-attendance">
+        <div class="dashboard-card__header">
+            <h3><?= __('Recent Attendance Records') ?></h3>
+        </div>
+        <div class="dashboard-card__body">
+            <table class="data-table data-table--compact">
+                <thead>
+                    <tr>
+                        <th><?= __('Date') ?></th>
+                        <th><?= __('Status') ?></th>
+                        <th><?= __('Check In') ?></th>
+                        <th><?= __('Check Out') ?></th>
+                        <th><?= __('Remarks') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($recentAttendance as $record): ?>
+                        <tr>
+                            <td>
+                                <strong><?= $record->date->format('D, M j') ?></strong>
+                                <small class="text-muted"><?= $record->date->format('Y') ?></small>
+                            </td>
+                            <td>
+                                <span class="attendance-status attendance-status--<?= $record->status ?>">
+                                    <?= h(ucfirst($record->status)) ?>
+                                </span>
+                            </td>
+                            <td><?= $record->check_in_time ? $record->check_in_time->format('h:i A') : '-' ?></td>
+                            <td><?= $record->check_out_time ? $record->check_out_time->format('h:i A') : '-' ?></td>
+                            <td><?= $record->remarks ? h($record->remarks) : '-' ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <div class="dashboard-card recent-posts">
         <div class="dashboard-card__header">

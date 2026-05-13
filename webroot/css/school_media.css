@@ -3435,3 +3435,1227 @@ body.auth-body {
     }
 }
 
+/* ============================================
+   ATTENDANCE MODULE STYLES
+   ============================================ */
+
+/* Attendance Status Badges */
+.attendance-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.attendance-status--present {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.attendance-status--absent {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.attendance-status--late {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.attendance-status--excused {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.attendance-status--half_day {
+    background-color: #f3e8ff;
+    color: #7c3aed;
+}
+
+/* Attendance Quick Actions */
+.attendance-quick-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.quick-action-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid transparent;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-action-btn--present {
+    background-color: #dcfce7;
+    color: #166534;
+    border-color: #166534;
+}
+
+.quick-action-btn--present:hover {
+    background-color: #166534;
+    color: white;
+}
+
+.quick-action-btn--absent {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-color: #991b1b;
+}
+
+.quick-action-btn--absent:hover {
+    background-color: #991b1b;
+    color: white;
+}
+
+/* Attendance Table */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attendance-table th,
+.attendance-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.attendance-table th {
+    background-color: var(--surface-color);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.attendance-table .student-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.attendance-table .student-avatar-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.attendance-table .student-avatar-initial-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+/* Status Radio Buttons */
+.status-options {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.status-radio {
+    display: none;
+}
+
+.status-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.status-label--present {
+    color: #166534;
+}
+
+.status-radio:checked + .status-label--present {
+    background-color: #166534;
+    color: white;
+    border-color: #166534;
+}
+
+.status-label--absent {
+    color: #991b1b;
+}
+
+.status-radio:checked + .status-label--absent {
+    background-color: #991b1b;
+    color: white;
+    border-color: #991b1b;
+}
+
+.status-label--late {
+    color: #92400e;
+}
+
+.status-radio:checked + .status-label--late {
+    background-color: #92400e;
+    color: white;
+    border-color: #92400e;
+}
+
+.status-label--excused {
+    color: #1e40af;
+}
+
+.status-radio:checked + .status-label--excused {
+    background-color: #1e40af;
+    color: white;
+    border-color: #1e40af;
+}
+
+.status-label--half_day {
+    color: #7c3aed;
+}
+
+.status-radio:checked + .status-label--half_day {
+    background-color: #7c3aed;
+    color: white;
+    border-color: #7c3aed;
+}
+
+/* Attendance Report Cards */
+.attendance-report-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.report-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-left: 4px solid var(--border-color);
+}
+
+.report-card--present {
+    border-left-color: #22c55e;
+}
+
+.report-card--absent {
+    border-left-color: #ef4444;
+}
+
+.report-card--late {
+    border-left-color: #f59e0b;
+}
+
+.report-card--excused {
+    border-left-color: #3b82f6;
+}
+
+.report-card--half_day {
+    border-left-color: #8b5cf6;
+}
+
+.report-card--total {
+    border-left-color: #6366f1;
+}
+
+.report-card--percentage {
+    border-left-color: var(--primary-color);
+}
+
+.report-card__value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.report-card__label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+/* Student Attendance Summary */
+.attendance-summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.summary-student-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.summary-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.summary-avatar-initial {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.summary-student-details h2 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.5rem;
+}
+
+.summary-student-details p {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+/* Monthly Trend Chart */
+.trend-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    height: 200px;
+    padding: 1rem 0;
+}
+
+.trend-bar-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.trend-bar {
+    width: 100%;
+    max-width: 40px;
+    background: linear-gradient(180deg, var(--primary-color), #7c3aed);
+    border-radius: 0.25rem 0.25rem 0 0;
+    position: relative;
+    min-height: 4px;
+    transition: height 0.3s ease;
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.trend-bar__value {
+    position: absolute;
+    bottom: 100%;
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    padding-bottom: 0.25rem;
+    white-space: nowrap;
+}
+
+.trend-bar__label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+}
+
+/* Calendar View */
+.attendance-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+}
+
+.calendar-header {
+    padding: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    cursor: default;
+}
+
+.calendar-day--empty {
+    background: transparent;
+}
+
+.calendar-day--present {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.calendar-day--absent {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.calendar-day--late {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.calendar-day--excused {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.calendar-day--weekend {
+    background-color: var(--surface-color);
+    color: var(--text-muted);
+}
+
+/* Student Dashboard Attendance Section */
+.attendance-section {
+    margin-top: 1.5rem;
+}
+
+.attendance-overview {
+    grid-column: span 2;
+}
+
+.class-info-badge {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.attendance-stats {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.attendance-stat--main {
+    text-align: center;
+}
+
+.attendance-percentage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    justify-content: center;
+}
+
+.attendance-percentage--good {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    color: #166534;
+}
+
+.attendance-percentage--warning {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+}
+
+.attendance-percentage--danger {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    color: #991b1b;
+}
+
+.percentage-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.percentage-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.attendance-stat__subtitle {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.attendance-breakdown {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.attendance-breakdown__item {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem;
+    background: var(--surface-color);
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.attendance-breakdown__item .count {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.attendance-breakdown__item .count--present {
+    color: #22c55e;
+}
+
+.attendance-breakdown__item .count--absent {
+    color: #ef4444;
+}
+
+.attendance-breakdown__item .count--late {
+    color: #f59e0b;
+}
+
+.attendance-breakdown__item .count--excused {
+    color: #3b82f6;
+}
+
+.attendance-breakdown__item .label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+.attendance-alert {
+    margin-top: 1rem;
+}
+
+/* Monthly Summary Card */
+.monthly-stats {
+    text-align: center;
+}
+
+.monthly-stat {
+    margin-bottom: 1rem;
+}
+
+.monthly-stat .stat-value {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.monthly-stat .stat-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.monthly-details {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
+}
+
+.detail-row span:last-child {
+    font-weight: 600;
+}
+
+/* Recent Attendance Table */
+.recent-attendance .data-table--compact th,
+.recent-attendance .data-table--compact td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+/* Student Attendance Page */
+.student-attendance {
+    max-width: 1200px;
+}
+
+.class-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+    color: white;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.class-banner__name {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.class-banner__grade,
+.class-banner__year {
+    padding: 0.25rem 0.75rem;
+    background: rgba(255,255,255,0.2);
+    border-radius: 9999px;
+    font-size: 0.875rem;
+}
+
+/* Attendance Summary Cards Grid */
+.attendance-summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.summary-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.summary-card--main {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+}
+
+.summary-card__content {
+    text-align: left;
+}
+
+.summary-card__value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.summary-card__label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+.summary-card--present {
+    border-left: 4px solid #22c55e;
+}
+
+.summary-card--absent {
+    border-left: 4px solid #ef4444;
+}
+
+.summary-card--late {
+    border-left: 4px solid #f59e0b;
+}
+
+.summary-card--excused {
+    border-left: 4px solid #3b82f6;
+}
+
+.summary-card--total {
+    border-left: 4px solid #6366f1;
+}
+
+/* Progress Ring */
+.progress-ring {
+    width: 80px;
+    height: 80px;
+}
+
+.progress-ring__svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.progress-ring__bg {
+    fill: none;
+    stroke: #e5e7eb;
+    stroke-width: 3;
+}
+
+.progress-ring__fill {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke-dasharray 0.3s ease;
+}
+
+.progress-ring__fill--success {
+    stroke: #22c55e;
+}
+
+.progress-ring__fill--warning {
+    stroke: #f59e0b;
+}
+
+.progress-ring__fill--danger {
+    stroke: #ef4444;
+}
+
+/* Class Info Grid */
+.class-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.class-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.class-info-item .label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.class-info-item .value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.class-info-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+}
+
+.class-overview {
+    margin-bottom: 1.5rem;
+}
+
+/* Students Section */
+.students-section {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.students-section__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.students-section__header h3 {
+    margin: 0;
+}
+
+/* Student Info in Table */
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.student-avatar-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.student-avatar-initial-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+/* Class Info Summary (Enroll Form) */
+.class-info-summary {
+    background: var(--surface-color);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 1.5rem 0;
+}
+
+.class-info-summary h4 {
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.class-info-summary .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.class-info-summary .info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.class-info-summary .info-item .label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.class-info-summary .info-item .value {
+    font-weight: 600;
+}
+
+/* Monthly Trend Card */
+.monthly-trend-card {
+    margin-bottom: 1.5rem;
+}
+
+/* Text utilities */
+.text-success {
+    color: #22c55e !important;
+}
+
+.text-danger {
+    color: #ef4444 !important;
+}
+
+.text-warning {
+    color: #f59e0b !important;
+}
+
+/* Badge variants */
+.badge--info {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.badge--outline {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+/* Attendance Responsive */
+@media (max-width: 768px) {
+    .attendance-overview {
+        grid-column: span 1;
+    }
+
+    .summary-card--main {
+        grid-column: span 1;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .summary-card__content {
+        text-align: center;
+    }
+
+    .attendance-stats {
+        flex-direction: column;
+    }
+
+    .attendance-breakdown {
+        width: 100%;
+    }
+
+    .trend-chart {
+        overflow-x: auto;
+        padding-bottom: 1rem;
+    }
+
+    .trend-bar-container {
+        min-width: 40px;
+    }
+
+    .class-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ============================================
+   ATTENDANCE MARK FORM STYLES
+   ============================================ */
+
+/* Attendance Card */
+.attendance-card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.attendance-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.attendance-card__header h3 {
+    margin: 0;
+}
+
+.attendance-date {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+/* Attendance Form */
+.attendance-form {
+    padding: 0;
+}
+
+.attendance-form__actions {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    text-align: right;
+}
+
+/* Attendance Filters */
+.attendance-filters {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Status Buttons */
+.status-buttons {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+}
+
+.status-btn {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.status-btn input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.status-btn span {
+    display: inline-block;
+    padding: 0.375rem 0.625rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.status-btn--success span {
+    color: #166534;
+}
+
+.status-btn--success input:checked + span {
+    background-color: #22c55e;
+    color: white;
+    border-color: #22c55e;
+}
+
+.status-btn--danger span {
+    color: #991b1b;
+}
+
+.status-btn--danger input:checked + span {
+    background-color: #ef4444;
+    color: white;
+    border-color: #ef4444;
+}
+
+.status-btn--warning span {
+    color: #92400e;
+}
+
+.status-btn--warning input:checked + span {
+    background-color: #f59e0b;
+    color: white;
+    border-color: #f59e0b;
+}
+
+.status-btn--info span {
+    color: #1e40af;
+}
+
+.status-btn--info input:checked + span {
+    background-color: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+/* Button variants for quick actions */
+.btn--success {
+    background-color: #22c55e;
+    color: white;
+}
+
+.btn--success:hover {
+    background-color: #16a34a;
+}
+
+.btn--danger {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btn--danger:hover {
+    background-color: #dc2626;
+}
+
+/* Attendance Table Columns */
+.attendance-table .col-roll {
+    width: 60px;
+    text-align: center;
+}
+
+.attendance-table .col-student {
+    min-width: 200px;
+}
+
+.attendance-table .col-status {
+    min-width: 320px;
+}
+
+.attendance-table .col-time {
+    width: 120px;
+}
+
+.attendance-table .col-remarks {
+    min-width: 150px;
+}
+
+/* Form control small variant */
+.form-control--small {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Report Table Styles */
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.report-table th,
+.report-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.report-table th {
+    background: var(--surface-color);
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.report-table .text-center {
+    text-align: center;
+}
+
+.report-table .student-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Percentage bar */
+.percentage-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.percentage-bar__track {
+    flex: 1;
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.percentage-bar__fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.percentage-bar__fill--good {
+    background: #22c55e;
+}
+
+.percentage-bar__fill--warning {
+    background: #f59e0b;
+}
+
+.percentage-bar__fill--danger {
+    background: #ef4444;
+}
+
+.percentage-bar__value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    min-width: 50px;
+    text-align: right;
+}
+
+/* Stat Badges */
+.stat-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.stat-badge--success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.stat-badge--danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.stat-badge--warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.stat-badge--info {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+/* Percentage Badges */
+.percentage-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.percentage-badge--success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.percentage-badge--warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.percentage-badge--danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Report Card Styles */
+.report-card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.report-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.report-card__header h3 {
+    margin: 0;
+}
+
+.report-period {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .attendance-card__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .status-buttons {
+        flex-direction: column;
+    }
+
+    .attendance-table .col-time,
+    .attendance-table .col-remarks {
+        display: none;
+    }
+
+    .report-table {
+        font-size: 0.75rem;
+    }
+
+    .report-table th,
+    .report-table td {
+        padding: 0.5rem 0.5rem;
+    }
+}
+

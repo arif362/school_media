@@ -10,6 +10,8 @@ $identityInitial = strtoupper(substr((string)$identityName, 0, 1)) ?: 'A';
 $navLinks = [
     ['label' => __('Dashboard'), 'url' => $this->Url->build('/admin')],
     ['label' => __('Posts'), 'url' => $this->Url->build('/posts')],
+    ['label' => __('Classes'), 'url' => $this->Url->build('/admin/classes')],
+    ['label' => __('Attendance'), 'url' => $this->Url->build('/admin/attendance')],
     ['label' => __('Notifications'), 'url' => $this->Url->build('/admin/notifications')],
     ['label' => __('Teachers'), 'url' => '#'],
     ['label' => __('Students'), 'url' => '#'],
