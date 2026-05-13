@@ -5,6 +5,7 @@
 $identity = $this->request->getAttribute('identity');
 $identityName = $identity?->get('name') ?? __('Content Lead');
 $identityRole = $identity?->get('role') ?? 'admin';
+$identityAvatar = $identity?->get('avatar');
 $identityInitial = strtoupper(substr((string)$identityName, 0, 1)) ?: 'A';
 $navLinks = [
     ['label' => __('Dashboard'), 'url' => $this->Url->build('/admin')],
@@ -39,7 +40,11 @@ $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identi
             <div class="dashboard-sidebar__inner">
                 <a class="dashboard-sidebar__brand" href="<?= $this->Url->build('/') ?>">School Media</a>
                 <div class="dashboard-profile">
-                    <span class="dashboard-avatar"><?= $identityInitial ?></span>
+                    <?php if ($identityAvatar): ?>
+                        <img src="<?= $this->Url->image($identityAvatar) ?>" alt="<?= h($identityName) ?>" class="dashboard-avatar-img">
+                    <?php else: ?>
+                        <span class="dashboard-avatar"><?= $identityInitial ?></span>
+                    <?php endif; ?>
                     <div>
                         <strong><?= h($identityName) ?></strong>
                         <p><?= h(ucfirst($identityRole)) ?></p>

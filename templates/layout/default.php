@@ -81,9 +81,18 @@ $footerColumns = [
                     );
                     ?>
                     <?= $this->element('notification_bell', ['unreadCount' => $notificationCount]) ?>
+                    <?php
+                    $userAvatar = $this->request->getAttribute('identity')->get('avatar');
+                    $userName = $this->request->getAttribute('identity')->get('name') ?? __('Logged in');
+                    $userInitial = strtoupper(substr((string)$userName, 0, 1)) ?: 'U';
+                    ?>
                     <span class="nav-login">
-                        <span class="nav-login__icon" aria-hidden="true">👤</span>
-                        <span><?= h($this->request->getAttribute('identity')->get('name') ?? __('Logged in')) ?></span>
+                        <?php if ($userAvatar): ?>
+                            <img src="<?= $this->Url->image($userAvatar) ?>" alt="<?= h($userName) ?>" class="nav-login__avatar">
+                        <?php else: ?>
+                            <span class="nav-login__initial"><?= $userInitial ?></span>
+                        <?php endif; ?>
+                        <span><?= h($userName) ?></span>
                     </span>
                     <a class="btn btn--ghost" href="<?= $this->Url->build('/logout') ?>"><?= __('Logout') ?></a>
                 <?php else: ?>

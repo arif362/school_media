@@ -291,6 +291,27 @@ body.sm-body {
     font-size: 1rem;
 }
 
+.nav-login__avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.nav-login__initial {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sm-gold), #e6a817);
+    color: var(--sm-navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
 .mobile-nav {
     display: none;
 }
@@ -1348,6 +1369,16 @@ body.auth-body {
     justify-content: center;
     font-weight: 700;
     font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.dashboard-avatar-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .dashboard-nav {
