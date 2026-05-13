@@ -9,36 +9,36 @@ $identityAvatar = $identity?->get('avatar');
 $identityInitial = strtoupper(substr((string)$identityName, 0, 1)) ?: 'A';
 $currentUrl = $this->request->getUri()->getPath();
 
-// Grouped navigation for better organization
+// Grouped navigation for better organization with colorful icons
 $navGroups = [
     'main' => [
         'label' => __('Main'),
         'items' => [
-            ['label' => __('Dashboard'), 'url' => '/admin', 'icon' => 'dashboard'],
-            ['label' => __('Posts'), 'url' => '/posts', 'icon' => 'posts'],
+            ['label' => __('Dashboard'), 'url' => '/admin', 'icon' => 'dashboard', 'color' => 'blue'],
+            ['label' => __('Posts'), 'url' => '/posts', 'icon' => 'posts', 'color' => 'orange'],
         ],
     ],
     'academic' => [
         'label' => __('Academic'),
         'items' => [
-            ['label' => __('Classes'), 'url' => '/admin/classes', 'icon' => 'classes'],
-            ['label' => __('Subjects'), 'url' => '/admin/subjects', 'icon' => 'subjects'],
-            ['label' => __('Courses'), 'url' => '/admin/courses', 'icon' => 'courses'],
-            ['label' => __('Attendance'), 'url' => '/admin/attendance', 'icon' => 'attendance'],
+            ['label' => __('Classes'), 'url' => '/admin/classes', 'icon' => 'classes', 'color' => 'purple'],
+            ['label' => __('Subjects'), 'url' => '/admin/subjects', 'icon' => 'subjects', 'color' => 'teal'],
+            ['label' => __('Courses'), 'url' => '/admin/courses', 'icon' => 'courses', 'color' => 'indigo'],
+            ['label' => __('Attendance'), 'url' => '/admin/attendance', 'icon' => 'attendance', 'color' => 'green'],
         ],
     ],
     'people' => [
         'label' => __('People'),
         'items' => [
-            ['label' => __('Teachers'), 'url' => '/admin/users/teachers', 'icon' => 'teachers'],
-            ['label' => __('Students'), 'url' => '/admin/users/students', 'icon' => 'students'],
-            ['label' => __('All Users'), 'url' => '/admin/users', 'icon' => 'users'],
+            ['label' => __('Teachers'), 'url' => '/admin/users/teachers', 'icon' => 'teachers', 'color' => 'cyan'],
+            ['label' => __('Students'), 'url' => '/admin/users/students', 'icon' => 'students', 'color' => 'pink'],
+            ['label' => __('All Users'), 'url' => '/admin/users', 'icon' => 'users', 'color' => 'slate'],
         ],
     ],
     'system' => [
         'label' => __('System'),
         'items' => [
-            ['label' => __('Notifications'), 'url' => '/admin/notifications', 'icon' => 'notifications'],
+            ['label' => __('Notifications'), 'url' => '/admin/notifications', 'icon' => 'notifications', 'color' => 'amber'],
         ],
     ],
 ];
@@ -103,7 +103,7 @@ $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identi
                             <?php foreach ($group['items'] as $link): ?>
                                 <?php $isActive = $currentUrl === $link['url'] || ($link['url'] !== '/admin' && str_starts_with($currentUrl, $link['url'])); ?>
                                 <a class="admin-sidebar__link<?= $isActive ? ' is-active' : '' ?>" href="<?= $this->Url->build($link['url']) ?>">
-                                    <span class="admin-sidebar__icon"><?= $icons[$link['icon']] ?? '' ?></span>
+                                    <span class="admin-sidebar__icon admin-sidebar__icon--<?= $link['color'] ?? 'default' ?>"><?= $icons[$link['icon']] ?? '' ?></span>
                                     <span class="admin-sidebar__label"><?= h($link['label']) ?></span>
                                 </a>
                             <?php endforeach; ?>
