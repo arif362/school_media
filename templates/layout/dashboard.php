@@ -8,16 +8,16 @@ $identityRole = $identity?->get('role') ?? 'admin';
 $identityAvatar = $identity?->get('avatar');
 $identityInitial = strtoupper(substr((string)$identityName, 0, 1)) ?: 'A';
 $navLinks = [
-    ['label' => __('Dashboard'), 'url' => $this->Url->build('/admin')],
-    ['label' => __('Posts'), 'url' => $this->Url->build('/posts')],
-    ['label' => __('Classes'), 'url' => $this->Url->build('/admin/classes')],
-    ['label' => __('Subjects'), 'url' => $this->Url->build('/admin/subjects')],
-    ['label' => __('Courses'), 'url' => $this->Url->build('/admin/courses')],
-    ['label' => __('Attendance'), 'url' => $this->Url->build('/admin/attendance')],
-    ['label' => __('Notifications'), 'url' => $this->Url->build('/admin/notifications')],
-    ['label' => __('Teachers'), 'url' => '#'],
-    ['label' => __('Students'), 'url' => '#'],
-    ['label' => __('Settings'), 'url' => '#'],
+    ['label' => __('Dashboard'), 'url' => $this->Url->build('/admin'), 'icon' => '&#127968;'],
+    ['label' => __('Posts'), 'url' => $this->Url->build('/posts'), 'icon' => '&#128196;'],
+    ['label' => __('Classes'), 'url' => $this->Url->build('/admin/classes'), 'icon' => '&#127979;'],
+    ['label' => __('Subjects'), 'url' => $this->Url->build('/admin/subjects'), 'icon' => '&#128218;'],
+    ['label' => __('Courses'), 'url' => $this->Url->build('/admin/courses'), 'icon' => '&#128214;'],
+    ['label' => __('Attendance'), 'url' => $this->Url->build('/admin/attendance'), 'icon' => '&#128197;'],
+    ['label' => __('Notifications'), 'url' => $this->Url->build('/admin/notifications'), 'icon' => '&#128276;'],
+    ['label' => __('Teachers'), 'url' => $this->Url->build('/admin/users/teachers'), 'icon' => '&#128104;&#8205;&#127979;'],
+    ['label' => __('Students'), 'url' => $this->Url->build('/admin/users/students'), 'icon' => '&#128100;'],
+    ['label' => __('All Users'), 'url' => $this->Url->build('/admin/users'), 'icon' => '&#128101;'],
 ];
 $userNotificationsTable = \Cake\ORM\TableRegistry::getTableLocator()->get('UserNotifications');
 $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identity->id, $identity->role) : 0;
@@ -56,7 +56,12 @@ $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identi
                 </div>
                 <nav class="dashboard-nav">
                     <?php foreach ($navLinks as $link): ?>
-                        <a class="dashboard-nav__link" href="<?= h($link['url']) ?>"><?= h($link['label']) ?></a>
+                        <a class="dashboard-nav__link" href="<?= h($link['url']) ?>">
+                            <?php if (!empty($link['icon'])): ?>
+                                <span class="nav-icon"><?= $link['icon'] ?></span>
+                            <?php endif; ?>
+                            <?= h($link['label']) ?>
+                        </a>
                     <?php endforeach; ?>
                 </nav>
             </div>
