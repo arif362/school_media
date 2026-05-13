@@ -138,9 +138,15 @@ $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identi
                     <span></span><span></span><span></span>
                 </button>
 
-                <div class="admin-topbar__search">
+                <div class="admin-topbar__search" id="globalSearch">
                     <span class="admin-topbar__search-icon"><?= $icons['search'] ?></span>
-                    <input type="text" class="admin-topbar__search-input" placeholder="<?= __('Search...') ?>">
+                    <input type="text" class="admin-topbar__search-input" id="globalSearchInput" placeholder="<?= __('Search users, posts, classes...') ?>" autocomplete="off">
+                    <kbd class="admin-topbar__search-kbd">/</kbd>
+                    <div class="global-search-dropdown" id="globalSearchDropdown">
+                        <div class="global-search-dropdown__content" id="globalSearchResults">
+                            <!-- Results will be populated by JavaScript -->
+                        </div>
+                    </div>
                 </div>
 
                 <div class="admin-topbar__actions">
@@ -164,9 +170,216 @@ $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identi
     </div>
 
     <script>
+    // Sidebar toggle
     document.getElementById('sidebarToggle')?.addEventListener('click', function() {
         document.querySelector('.admin-layout').classList.toggle('sidebar-open');
     });
+
+    // Global Search Functionality
+    (function() {
+        const searchContainer = document.getElementById('globalSearch');
+        const searchInput = document.getElementById('globalSearchInput');
+        const searchDropdown = document.getElementById('globalSearchDropdown');
+        const searchResults = document.getElementById('globalSearchResults');
+
+        if (!searchInput || !searchDropdown || !searchResults) return;
+
+        let debounceTimer = null;
+        let currentQuery = '';
+        let selectedIndex = -1;
+
+        // Icon templates for different result types
+        const icons = {
+            teacher: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+            student: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>',
+            user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+            post: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+            class: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+            subject: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+            course: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>',
+        };
+
+        function performSearch(query) {
+            if (query.length < 2) {
+                hideDropdown();
+                return;
+            }
+
+            currentQuery = query;
+
+            fetch(`<?= $this->Url->build(['controller' => 'Search', 'action' => 'search', 'prefix' => 'Admin']) ?>?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (query !== currentQuery) return; // Query changed, ignore results
+                    renderResults(data);
+                })
+                .catch(error => {
+                    console.error('Search error:', error);
+                    searchResults.innerHTML = '<div class="global-search-dropdown__empty"><?= __('Search failed. Please try again.') ?></div>';
+                    showDropdown();
+                });
+        }
+
+        function renderResults(data) {
+            selectedIndex = -1;
+
+            if (data.results.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="global-search-dropdown__empty">
+                        <span class="global-search-dropdown__empty-icon"><?= $icons['search'] ?></span>
+                        <p><?= __('No results found for') ?> "<strong>${escapeHtml(data.query)}</strong>"</p>
+                    </div>
+                `;
+                showDropdown();
+                return;
+            }
+
+            let html = '';
+
+            // Group results by type
+            const grouped = {};
+            data.results.forEach(result => {
+                if (!grouped[result.type]) grouped[result.type] = [];
+                grouped[result.type].push(result);
+            });
+
+            const typeLabels = {
+                user: '<?= __('Users') ?>',
+                post: '<?= __('Posts') ?>',
+                class: '<?= __('Classes') ?>',
+                subject: '<?= __('Subjects') ?>',
+                course: '<?= __('Courses') ?>',
+            };
+
+            let itemIndex = 0;
+            for (const [type, results] of Object.entries(grouped)) {
+                html += `<div class="global-search-dropdown__group">
+                    <span class="global-search-dropdown__group-label">${typeLabels[type] || type}</span>`;
+
+                results.forEach(result => {
+                    const icon = icons[result.icon] || icons.user;
+                    html += `
+                        <a href="${result.url}" class="global-search-dropdown__item" data-index="${itemIndex}">
+                            <span class="global-search-dropdown__item-icon">${icon}</span>
+                            <div class="global-search-dropdown__item-content">
+                                <span class="global-search-dropdown__item-title">${highlightMatch(result.title, data.query)}</span>
+                                <span class="global-search-dropdown__item-subtitle">${escapeHtml(result.subtitle)}</span>
+                            </div>
+                        </a>
+                    `;
+                    itemIndex++;
+                });
+
+                html += '</div>';
+            }
+
+            if (data.total > data.results.length) {
+                html += `<div class="global-search-dropdown__footer">
+                    <?= __('Showing') ?> ${data.results.length} <?= __('of') ?> ${data.total} <?= __('results') ?>
+                </div>`;
+            }
+
+            searchResults.innerHTML = html;
+            showDropdown();
+        }
+
+        function highlightMatch(text, query) {
+            const escaped = escapeHtml(text);
+            const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+            return escaped.replace(regex, '<mark>$1</mark>');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function showDropdown() {
+            searchDropdown.classList.add('is-open');
+            searchContainer.classList.add('is-searching');
+        }
+
+        function hideDropdown() {
+            searchDropdown.classList.remove('is-open');
+            searchContainer.classList.remove('is-searching');
+            selectedIndex = -1;
+        }
+
+        function navigateResults(direction) {
+            const items = searchResults.querySelectorAll('.global-search-dropdown__item');
+            if (items.length === 0) return;
+
+            items[selectedIndex]?.classList.remove('is-selected');
+
+            if (direction === 'down') {
+                selectedIndex = selectedIndex < items.length - 1 ? selectedIndex + 1 : 0;
+            } else {
+                selectedIndex = selectedIndex > 0 ? selectedIndex - 1 : items.length - 1;
+            }
+
+            items[selectedIndex]?.classList.add('is-selected');
+            items[selectedIndex]?.scrollIntoView({ block: 'nearest' });
+        }
+
+        function selectCurrentResult() {
+            const items = searchResults.querySelectorAll('.global-search-dropdown__item');
+            if (items[selectedIndex]) {
+                window.location.href = items[selectedIndex].href;
+            }
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => performSearch(query), 250);
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                navigateResults('down');
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                navigateResults('up');
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (selectedIndex >= 0) {
+                    selectCurrentResult();
+                }
+            } else if (e.key === 'Escape') {
+                hideDropdown();
+                searchInput.blur();
+            }
+        });
+
+        searchInput.addEventListener('focus', function() {
+            if (this.value.trim().length >= 2) {
+                showDropdown();
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchContainer.contains(e.target)) {
+                hideDropdown();
+            }
+        });
+
+        // Keyboard shortcut: "/" to focus search
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    })();
     </script>
     <?= $this->fetch('script') ?>
 </body>

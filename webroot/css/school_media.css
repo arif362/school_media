@@ -2489,6 +2489,201 @@ body.auth-body {
     color: var(--sm-muted);
 }
 
+.admin-topbar__search-kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem 0.5rem;
+    background: rgba(15, 31, 58, 0.08);
+    border: 1px solid rgba(15, 31, 58, 0.12);
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-family: inherit;
+    color: var(--sm-muted);
+    flex-shrink: 0;
+}
+
+.admin-topbar__search.is-searching .admin-topbar__search-kbd {
+    display: none;
+}
+
+/* Global Search Dropdown */
+.global-search-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: var(--sm-white);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(15, 31, 58, 0.2), 0 0 0 1px rgba(15, 31, 58, 0.08);
+    max-height: 400px;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+.global-search-dropdown.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.global-search-dropdown__content {
+    max-height: 360px;
+    overflow-y: auto;
+}
+
+.global-search-dropdown__content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.global-search-dropdown__content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.global-search-dropdown__content::-webkit-scrollbar-thumb {
+    background: rgba(15, 31, 58, 0.15);
+    border-radius: 3px;
+}
+
+.global-search-dropdown__group {
+    padding: 0.5rem 0;
+}
+
+.global-search-dropdown__group:not(:last-child) {
+    border-bottom: 1px solid rgba(15, 31, 58, 0.06);
+}
+
+.global-search-dropdown__group-label {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--sm-muted);
+}
+
+.global-search-dropdown__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 1rem;
+    text-decoration: none;
+    color: var(--sm-navy);
+    transition: background 0.15s ease;
+}
+
+.global-search-dropdown__item:hover,
+.global-search-dropdown__item.is-selected {
+    background: rgba(15, 31, 58, 0.04);
+}
+
+.global-search-dropdown__item.is-selected {
+    background: rgba(252, 191, 73, 0.1);
+}
+
+.global-search-dropdown__item-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 31, 58, 0.06);
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.global-search-dropdown__item-icon svg {
+    width: 16px;
+    height: 16px;
+    color: var(--sm-muted);
+}
+
+.global-search-dropdown__item:hover .global-search-dropdown__item-icon,
+.global-search-dropdown__item.is-selected .global-search-dropdown__item-icon {
+    background: var(--sm-navy);
+}
+
+.global-search-dropdown__item:hover .global-search-dropdown__item-icon svg,
+.global-search-dropdown__item.is-selected .global-search-dropdown__item-icon svg {
+    color: var(--sm-white);
+}
+
+.global-search-dropdown__item-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.global-search-dropdown__item-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.global-search-dropdown__item-title mark {
+    background: rgba(252, 191, 73, 0.4);
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+.global-search-dropdown__item-subtitle {
+    font-size: 0.75rem;
+    color: var(--sm-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.global-search-dropdown__empty {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--sm-muted);
+}
+
+.global-search-dropdown__empty-icon {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.global-search-dropdown__empty-icon svg {
+    width: 32px;
+    height: 32px;
+    opacity: 0.4;
+}
+
+.global-search-dropdown__empty p {
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+.global-search-dropdown__empty strong {
+    color: var(--sm-navy);
+}
+
+.global-search-dropdown__footer {
+    padding: 0.75rem 1rem;
+    background: rgba(15, 31, 58, 0.03);
+    font-size: 0.75rem;
+    color: var(--sm-muted);
+    text-align: center;
+    border-top: 1px solid rgba(15, 31, 58, 0.06);
+}
+
+/* Make search container position relative for dropdown */
+.admin-topbar__search {
+    position: relative;
+}
+
 /* Actions */
 .admin-topbar__actions {
     display: flex;
