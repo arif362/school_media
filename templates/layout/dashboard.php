@@ -75,16 +75,17 @@ $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identi
                 <?= $this->element('notification_bell', ['unreadCount' => $notificationCount]) ?>
                 <?= $this->Html->link(__('View site →'), '/', ['class' => 'dashboard-main__link']) ?>
             </div>
+            <?php if ($this->fetch('dashboardTitle') || $this->fetch('dashboardSubtitle') || $this->fetch('dashboardActions')): ?>
             <header class="dashboard-header">
                 <div>
-                    <p class="eyebrow text-muted">
-                        <?= $this->fetch('dashboardEyebrow') ?: __('Content Studio') ?>
-                    </p>
-                    <h1><?= $this->fetch('dashboardTitle') ?: ($this->fetch('title') ?: __('Dashboard')) ?></h1>
+                    <?php if ($this->fetch('dashboardEyebrow')): ?>
+                        <p class="eyebrow text-muted"><?= $this->fetch('dashboardEyebrow') ?></p>
+                    <?php endif; ?>
+                    <?php if ($this->fetch('dashboardTitle')): ?>
+                        <h1><?= $this->fetch('dashboardTitle') ?></h1>
+                    <?php endif; ?>
                     <?php if ($this->fetch('dashboardSubtitle')): ?>
                         <p><?= $this->fetch('dashboardSubtitle') ?></p>
-                    <?php else: ?>
-                        <p><?= __('Ship campus-wide announcements, stories, and updates with confidence.') ?></p>
                     <?php endif; ?>
                 </div>
                 <?php if (trim($this->fetch('dashboardActions')) !== ''): ?>
@@ -93,6 +94,7 @@ $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identi
                     </div>
                 <?php endif; ?>
             </header>
+            <?php endif; ?>
 
             <?php if (trim($this->fetch('breadcrumbs')) !== ''): ?>
                 <div class="dashboard-breadcrumbs">

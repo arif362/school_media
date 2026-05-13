@@ -233,9 +233,12 @@ class UsersController extends AdminAppController
             $this->Flash->error(__('Unable to create teacher account. Please try again.'));
         }
 
-        // Get subjects for assignment
+        // Get subjects for assignment (ordered alphabetically)
         $subjectsTable = $this->fetchTable('Subjects');
-        $subjects = $subjectsTable->find('list')->find('active')->toArray();
+        $subjects = $subjectsTable->find()
+            ->find('active')
+            ->orderBy(['Subjects.name' => 'ASC'])
+            ->all();
 
         $this->set(compact('user', 'subjects'));
     }
@@ -292,7 +295,7 @@ class UsersController extends AdminAppController
     }
 
     /**
-     * View user details
+     * View user details with comprehensive information
      */
     public function view(?string $id = null)
     {
@@ -301,9 +304,17 @@ class UsersController extends AdminAppController
 
         $teacherSubjects = null;
         $teacherCourses = null;
+        $teacherStats = null;
         $studentClasses = null;
         $studentCourses = null;
         $attendanceStats = null;
+        $attendanceHistory = null;
+        $feesSummary = null;
+        $recentPayments = null;
+        $grades = null;
+
+        $currentYear = (int)date('Y');
+        $academicYear = $currentYear . '-' . ($currentYear + 1);
 
         if ($user->role === 'teacher') {
             // Get teacher's subjects
@@ -313,15 +324,41 @@ class UsersController extends AdminAppController
                 ->where(['TeacherSubjects.teacher_id' => $id])
                 ->all();
 
-            // Get teacher's courses
+            // Get teacher's courses with student count
             $coursesTable = $this->fetchTable('Courses');
             $teacherCourses = $coursesTable->find()
                 ->contain(['Subjects', 'Classes'])
                 ->where(['Courses.teacher_id' => $id])
-                ->orderBy(['Courses.academic_year' => 'DESC'])
+                ->orderBy(['Courses.academic_year' => 'DESC', 'Courses.created' => 'DESC'])
                 ->all();
+
+            // Teacher statistics
+            $studentCoursesTable = $this->fetchTable('StudentCourses');
+            $totalStudents = 0;
+            $courseIds = [];
+            foreach ($teacherCourses as $course) {
+                $courseIds[] = $course->id;
+            }
+
+            if (!empty($courseIds)) {
+                $totalStudents = $studentCoursesTable->find()
+                    ->where(['course_id IN' => $courseIds, 'status' => 'enrolled'])
+                    ->count();
+            }
+
+            $activeCourses = $coursesTable->find()
+                ->where(['teacher_id' => $id, 'is_active' => true])
+                ->count();
+
+            $teacherStats = [
+                'total_courses' => count($teacherCourses),
+                'active_courses' => $activeCourses,
+                'total_students' => $totalStudents,
+                'subjects_count' => $teacherSubjects ? $teacherSubjects->count() : 0,
+            ];
+
         } elseif ($user->role === 'student') {
-            // Get student's classes
+            // Get student's current class
             $studentClassesTable = $this->fetchTable('StudentClasses');
             $studentClasses = $studentClassesTable->find()
                 ->contain(['Classes'])
@@ -329,7 +366,7 @@ class UsersController extends AdminAppController
                 ->orderBy(['StudentClasses.academic_year' => 'DESC'])
                 ->all();
 
-            // Get student's courses
+            // Get student's courses with grades
             $studentCoursesTable = $this->fetchTable('StudentCourses');
             $studentCourses = $studentCoursesTable->find()
                 ->contain(['Courses' => ['Subjects', 'Classes', 'Teachers']])
@@ -337,23 +374,118 @@ class UsersController extends AdminAppController
                 ->orderBy(['StudentCourses.enrolled_date' => 'DESC'])
                 ->all();
 
-            // Get attendance stats
+            // Calculate grade statistics
+            $gradePoints = ['A*' => 5, 'A' => 4.5, 'B' => 4, 'C' => 3, 'D' => 2, 'E' => 1, 'U' => 0];
+            $totalPoints = 0;
+            $gradedCourses = 0;
+            $gradeDistribution = [];
+
+            foreach ($studentCourses as $sc) {
+                if ($sc->grade) {
+                    $gradedCourses++;
+                    $totalPoints += $gradePoints[$sc->grade] ?? 0;
+                    $gradeDistribution[$sc->grade] = ($gradeDistribution[$sc->grade] ?? 0) + 1;
+                }
+            }
+
+            $grades = [
+                'gpa' => $gradedCourses > 0 ? round($totalPoints / $gradedCourses, 2) : null,
+                'graded_courses' => $gradedCourses,
+                'total_courses' => $studentCourses->count(),
+                'distribution' => $gradeDistribution,
+            ];
+
+            // Detailed attendance stats
             $attendanceTable = $this->fetchTable('Attendances');
+
+            // Overall stats
             $totalAttendance = $attendanceTable->find()
                 ->where(['Attendances.student_id' => $id])
                 ->count();
             $presentCount = $attendanceTable->find()
                 ->where(['Attendances.student_id' => $id, 'Attendances.status' => 'present'])
                 ->count();
+            $absentCount = $attendanceTable->find()
+                ->where(['Attendances.student_id' => $id, 'Attendances.status' => 'absent'])
+                ->count();
+            $lateCount = $attendanceTable->find()
+                ->where(['Attendances.student_id' => $id, 'Attendances.status' => 'late'])
+                ->count();
 
             $attendanceStats = [
                 'total' => $totalAttendance,
                 'present' => $presentCount,
+                'absent' => $absentCount,
+                'late' => $lateCount,
                 'percentage' => $totalAttendance > 0 ? round(($presentCount / $totalAttendance) * 100, 1) : 0,
             ];
+
+            // Monthly attendance for the last 6 months
+            $attendanceHistory = [];
+            for ($i = 5; $i >= 0; $i--) {
+                $monthStart = date('Y-m-01', strtotime("-$i months"));
+                $monthEnd = date('Y-m-t', strtotime("-$i months"));
+                $monthName = date('M Y', strtotime("-$i months"));
+
+                $monthPresent = $attendanceTable->find()
+                    ->where([
+                        'student_id' => $id,
+                        'status' => 'present',
+                        'date >=' => $monthStart,
+                        'date <=' => $monthEnd,
+                    ])->count();
+
+                $monthTotal = $attendanceTable->find()
+                    ->where([
+                        'student_id' => $id,
+                        'date >=' => $monthStart,
+                        'date <=' => $monthEnd,
+                    ])->count();
+
+                $attendanceHistory[] = [
+                    'month' => $monthName,
+                    'present' => $monthPresent,
+                    'total' => $monthTotal,
+                    'percentage' => $monthTotal > 0 ? round(($monthPresent / $monthTotal) * 100, 1) : 0,
+                ];
+            }
+
+            // Get fees summary (with null check for table existence)
+            try {
+                $studentFeesTable = $this->fetchTable('StudentFees');
+                $feesSummary = $studentFeesTable->getStudentFeesSummary((int)$id, $academicYear);
+
+                // Recent payments
+                $feePaymentsTable = $this->fetchTable('FeePayments');
+                $recentPayments = $feePaymentsTable->find()
+                    ->contain(['StudentFees' => ['FeeTypes']])
+                    ->matching('StudentFees', function ($q) use ($id) {
+                        return $q->where(['StudentFees.student_id' => $id]);
+                    })
+                    ->orderBy(['FeePayments.payment_date' => 'DESC'])
+                    ->limit(5)
+                    ->all();
+            } catch (\Exception $e) {
+                // Tables don't exist yet, skip fees
+                $feesSummary = null;
+                $recentPayments = null;
+            }
         }
 
-        $this->set(compact('user', 'teacherSubjects', 'teacherCourses', 'studentClasses', 'studentCourses', 'attendanceStats'));
+        $this->set(compact(
+            'user',
+            'teacherSubjects',
+            'teacherCourses',
+            'teacherStats',
+            'studentClasses',
+            'studentCourses',
+            'attendanceStats',
+            'attendanceHistory',
+            'feesSummary',
+            'recentPayments',
+            'grades',
+            'academicYear'
+        ));
     }
 
     /**

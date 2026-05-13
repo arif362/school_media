@@ -17,8 +17,8 @@ $this->assign('title', __('Teacher Management'));
             <nav class="breadcrumb">
                 <?= $this->Html->link(__('Users'), ['action' => 'index']) ?> / <?= __('Teachers') ?>
             </nav>
-            <h1><?= __('Teacher Management') ?></h1>
-            <p class="text-muted"><?= __('Onboard and manage teaching staff') ?></p>
+            <h1><?= __('Teachers') ?></h1>
+            <p class="text-muted"><?= __('Manage teaching staff members') ?></p>
         </div>
         <div class="admin-section__actions">
             <?= $this->Html->link(__('Import Teachers'), ['action' => 'importTeachers'], ['class' => 'btn btn--outline']) ?>
