@@ -13,26 +13,26 @@
 $this->assign('title', __('Posts'));
 ?>
 
-<section class="posts-page">
-    <div class="shell">
-        <header class="posts-page__header">
-            <div class="posts-page__intro">
-                <p class="eyebrow text-muted"><?= $canManage ? __('Editorial Hub') : __('Campus Stories') ?></p>
-                <h1><?= $canManage ? __('Manage Posts') : __('Latest Stories') ?></h1>
-                <p class="posts-page__subtitle">
-                    <?= $canManage
-                        ? __('Create, edit, and manage all content from one place.')
-                        : __('Discover news, events, and creative work from our school community.') ?>
-                </p>
-            </div>
-            <?php if ($canManage): ?>
+<section class="admin-section">
+    <header class="admin-section__header">
+        <div>
+            <h1><?= $canManage ? __('Manage Posts') : __('Latest Stories') ?></h1>
+            <p class="text-muted">
+                <?= $canManage
+                    ? __('Create, edit, and manage all content from one place.')
+                    : __('Discover news, events, and creative work from our school community.') ?>
+            </p>
+        </div>
+        <?php if ($canManage): ?>
+            <div class="admin-section__actions">
                 <?= $this->Html->link(
                     __('+ New Post'),
                     ['action' => 'add'],
                     ['class' => 'btn btn--solid']
                 ) ?>
-            <?php endif; ?>
-        </header>
+            </div>
+        <?php endif; ?>
+    </header>
 
         <div class="posts-filters">
             <?= $this->Form->create(null, ['type' => 'get', 'class' => 'posts-search-form']) ?>
@@ -220,5 +220,4 @@ $this->assign('title', __('Posts'));
             });
             </script>
         <?php endif; ?>
-    </div>
 </section>

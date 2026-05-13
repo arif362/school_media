@@ -3,22 +3,63 @@
  * @var \App\View\AppView $this
  */
 $identity = $this->request->getAttribute('identity');
-$identityName = $identity?->get('name') ?? __('Content Lead');
+$identityName = $identity?->get('name') ?? __('Admin User');
 $identityRole = $identity?->get('role') ?? 'admin';
 $identityAvatar = $identity?->get('avatar');
 $identityInitial = strtoupper(substr((string)$identityName, 0, 1)) ?: 'A';
-$navLinks = [
-    ['label' => __('Dashboard'), 'url' => $this->Url->build('/admin'), 'icon' => '&#127968;'],
-    ['label' => __('Posts'), 'url' => $this->Url->build('/posts'), 'icon' => '&#128196;'],
-    ['label' => __('Classes'), 'url' => $this->Url->build('/admin/classes'), 'icon' => '&#127979;'],
-    ['label' => __('Subjects'), 'url' => $this->Url->build('/admin/subjects'), 'icon' => '&#128218;'],
-    ['label' => __('Courses'), 'url' => $this->Url->build('/admin/courses'), 'icon' => '&#128214;'],
-    ['label' => __('Attendance'), 'url' => $this->Url->build('/admin/attendance'), 'icon' => '&#128197;'],
-    ['label' => __('Notifications'), 'url' => $this->Url->build('/admin/notifications'), 'icon' => '&#128276;'],
-    ['label' => __('Teachers'), 'url' => $this->Url->build('/admin/users/teachers'), 'icon' => '&#128104;&#8205;&#127979;'],
-    ['label' => __('Students'), 'url' => $this->Url->build('/admin/users/students'), 'icon' => '&#128100;'],
-    ['label' => __('All Users'), 'url' => $this->Url->build('/admin/users'), 'icon' => '&#128101;'],
+$currentUrl = $this->request->getUri()->getPath();
+
+// Grouped navigation for better organization with colorful icons
+$navGroups = [
+    'main' => [
+        'label' => __('Main'),
+        'items' => [
+            ['label' => __('Dashboard'), 'url' => '/admin', 'icon' => 'dashboard', 'color' => 'blue'],
+            ['label' => __('Posts'), 'url' => '/posts', 'icon' => 'posts', 'color' => 'orange'],
+        ],
+    ],
+    'academic' => [
+        'label' => __('Academic'),
+        'items' => [
+            ['label' => __('Classes'), 'url' => '/admin/classes', 'icon' => 'classes', 'color' => 'purple'],
+            ['label' => __('Subjects'), 'url' => '/admin/subjects', 'icon' => 'subjects', 'color' => 'teal'],
+            ['label' => __('Courses'), 'url' => '/admin/courses', 'icon' => 'courses', 'color' => 'indigo'],
+            ['label' => __('Attendance'), 'url' => '/admin/attendance', 'icon' => 'attendance', 'color' => 'green'],
+        ],
+    ],
+    'people' => [
+        'label' => __('People'),
+        'items' => [
+            ['label' => __('Teachers'), 'url' => '/admin/users/teachers', 'icon' => 'teachers', 'color' => 'cyan'],
+            ['label' => __('Students'), 'url' => '/admin/users/students', 'icon' => 'students', 'color' => 'pink'],
+            ['label' => __('All Users'), 'url' => '/admin/users', 'icon' => 'users', 'color' => 'slate'],
+        ],
+    ],
+    'system' => [
+        'label' => __('System'),
+        'items' => [
+            ['label' => __('Notifications'), 'url' => '/admin/notifications', 'icon' => 'notifications', 'color' => 'amber'],
+        ],
+    ],
 ];
+
+// SVG icons for cleaner look
+$icons = [
+    'dashboard' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>',
+    'posts' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>',
+    'classes' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+    'subjects' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg>',
+    'courses' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>',
+    'attendance' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>',
+    'teachers' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    'students' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>',
+    'users' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+    'notifications' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>',
+    'logout' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>',
+    'external' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
+    'search' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+];
+
 $userNotificationsTable = \Cake\ORM\TableRegistry::getTableLocator()->get('UserNotifications');
 $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identity->id, $identity->role) : 0;
 ?>
@@ -39,76 +80,307 @@ $notificationCount = $identity ? $userNotificationsTable->getUnreadCount($identi
     <?= $this->fetch('css') ?>
 </head>
 <body class="sm-body dashboard-body">
-    <div class="dashboard-shell">
-        <aside class="dashboard-sidebar">
-            <div class="dashboard-sidebar__inner">
-                <a class="dashboard-sidebar__brand" href="<?= $this->Url->build('/') ?>">School Media</a>
-                <div class="dashboard-profile">
-                    <?php if ($identityAvatar): ?>
-                        <img src="<?= $this->Url->image($identityAvatar) ?>" alt="<?= h($identityName) ?>" class="dashboard-avatar-img">
-                    <?php else: ?>
-                        <span class="dashboard-avatar"><?= $identityInitial ?></span>
-                    <?php endif; ?>
-                    <div>
-                        <strong><?= h($identityName) ?></strong>
-                        <p><?= h(ucfirst($identityRole)) ?></p>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar__header">
+                <a class="admin-sidebar__brand" href="<?= $this->Url->build('/admin') ?>">
+                    <div class="admin-sidebar__logo-wrap">
+                        <span class="admin-sidebar__logo-icon">S</span>
                     </div>
-                </div>
-                <nav class="dashboard-nav">
-                    <?php foreach ($navLinks as $link): ?>
-                        <a class="dashboard-nav__link" href="<?= h($link['url']) ?>">
-                            <?php if (!empty($link['icon'])): ?>
-                                <span class="nav-icon"><?= $link['icon'] ?></span>
-                            <?php endif; ?>
-                            <?= h($link['label']) ?>
-                        </a>
+                    <div class="admin-sidebar__brand-text">
+                        <span class="admin-sidebar__brand-name">School Media</span>
+                        <span class="admin-sidebar__brand-tag">Administration</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="admin-sidebar__body">
+                <nav class="admin-sidebar__nav">
+                    <?php foreach ($navGroups as $groupKey => $group): ?>
+                        <div class="admin-nav-group">
+                            <span class="admin-nav-group__label"><?= $group['label'] ?></span>
+                            <?php foreach ($group['items'] as $link): ?>
+                                <?php $isActive = $currentUrl === $link['url'] || ($link['url'] !== '/admin' && str_starts_with($currentUrl, $link['url'])); ?>
+                                <a class="admin-sidebar__link<?= $isActive ? ' is-active' : '' ?>" href="<?= $this->Url->build($link['url']) ?>">
+                                    <span class="admin-sidebar__icon admin-sidebar__icon--<?= $link['color'] ?? 'default' ?>"><?= $icons[$link['icon']] ?? '' ?></span>
+                                    <span class="admin-sidebar__label"><?= h($link['label']) ?></span>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
                     <?php endforeach; ?>
                 </nav>
             </div>
-            <div class="dashboard-sidebar__cta">
-                <a class="btn btn--ghost w-full" href="<?= $this->Url->build('/logout') ?>"><?= __('Logout') ?></a>
+
+            <div class="admin-sidebar__footer">
+                <div class="admin-sidebar__user-card">
+                    <?php if ($identityAvatar): ?>
+                        <img src="<?= $this->Url->image($identityAvatar) ?>" alt="<?= h($identityName) ?>" class="admin-sidebar__avatar">
+                    <?php else: ?>
+                        <span class="admin-sidebar__avatar"><?= $identityInitial ?></span>
+                    <?php endif; ?>
+                    <div class="admin-sidebar__user-info">
+                        <strong><?= h($identityName) ?></strong>
+                        <span><?= h(ucfirst($identityRole)) ?></span>
+                    </div>
+                    <a class="admin-sidebar__logout-btn" href="<?= $this->Url->build('/logout') ?>" title="<?= __('Logout') ?>">
+                        <?= $icons['logout'] ?>
+                    </a>
+                </div>
             </div>
         </aside>
 
-        <main class="dashboard-main">
-            <div class="dashboard-main__top-actions">
-                <?= $this->element('notification_bell', ['unreadCount' => $notificationCount]) ?>
-                <?= $this->Html->link(__('View site →'), '/', ['class' => 'dashboard-main__link']) ?>
-            </div>
-            <header class="dashboard-header">
-                <div>
-                    <p class="eyebrow text-muted">
-                        <?= $this->fetch('dashboardEyebrow') ?: __('Content Studio') ?>
-                    </p>
-                    <h1><?= $this->fetch('dashboardTitle') ?: ($this->fetch('title') ?: __('Dashboard')) ?></h1>
-                    <?php if ($this->fetch('dashboardSubtitle')): ?>
-                        <p><?= $this->fetch('dashboardSubtitle') ?></p>
-                    <?php else: ?>
-                        <p><?= __('Ship campus-wide announcements, stories, and updates with confidence.') ?></p>
-                    <?php endif; ?>
-                </div>
-                <?php if (trim($this->fetch('dashboardActions')) !== ''): ?>
-                    <div class="dashboard-header__actions">
-                        <?= $this->fetch('dashboardActions') ?>
+        <!-- Main Content -->
+        <div class="admin-main">
+            <!-- Top Bar -->
+            <header class="admin-topbar">
+                <button class="admin-topbar__toggle" id="sidebarToggle" type="button" aria-label="Toggle sidebar">
+                    <span></span><span></span><span></span>
+                </button>
+
+                <div class="admin-topbar__search" id="globalSearch">
+                    <span class="admin-topbar__search-icon"><?= $icons['search'] ?></span>
+                    <input type="text" class="admin-topbar__search-input" id="globalSearchInput" placeholder="<?= __('Search users, posts, classes...') ?>" autocomplete="off">
+                    <kbd class="admin-topbar__search-kbd">/</kbd>
+                    <div class="global-search-dropdown" id="globalSearchDropdown">
+                        <div class="global-search-dropdown__content" id="globalSearchResults">
+                            <!-- Results will be populated by JavaScript -->
+                        </div>
                     </div>
-                <?php endif; ?>
+                </div>
+
+                <div class="admin-topbar__actions">
+                    <a href="<?= $this->Url->build('/') ?>" class="admin-topbar__btn" target="_blank" title="<?= __('View Site') ?>">
+                        <span class="admin-topbar__btn-icon"><?= $icons['external'] ?></span>
+                        <span class="admin-topbar__btn-text"><?= __('View Site') ?></span>
+                    </a>
+                    <?= $this->element('notification_bell', ['unreadCount' => $notificationCount]) ?>
+                </div>
             </header>
 
-            <?php if (trim($this->fetch('breadcrumbs')) !== ''): ?>
-                <div class="dashboard-breadcrumbs">
-                    <?= $this->fetch('breadcrumbs') ?>
+            <!-- Content Area -->
+            <main class="admin-content">
+                <div class="toast-stack" aria-live="polite" aria-atomic="true">
+                    <?= $this->Flash->render() ?>
                 </div>
-            <?php endif; ?>
 
-            <div class="toast-stack" aria-live="polite" aria-atomic="true">
-                <?= $this->Flash->render() ?>
-            </div>
-
-            <?= $this->fetch('content') ?>
-        </main>
+                <?= $this->fetch('content') ?>
+            </main>
+        </div>
     </div>
 
+    <script>
+    // Sidebar toggle
+    document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+        document.querySelector('.admin-layout').classList.toggle('sidebar-open');
+    });
+
+    // Global Search Functionality
+    (function() {
+        const searchContainer = document.getElementById('globalSearch');
+        const searchInput = document.getElementById('globalSearchInput');
+        const searchDropdown = document.getElementById('globalSearchDropdown');
+        const searchResults = document.getElementById('globalSearchResults');
+
+        if (!searchInput || !searchDropdown || !searchResults) return;
+
+        let debounceTimer = null;
+        let currentQuery = '';
+        let selectedIndex = -1;
+
+        // Icon templates for different result types
+        const icons = {
+            teacher: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+            student: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>',
+            user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+            post: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+            class: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+            subject: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+            course: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>',
+        };
+
+        function performSearch(query) {
+            if (query.length < 2) {
+                hideDropdown();
+                return;
+            }
+
+            currentQuery = query;
+
+            fetch(`<?= $this->Url->build(['controller' => 'Search', 'action' => 'search', 'prefix' => 'Admin']) ?>?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (query !== currentQuery) return; // Query changed, ignore results
+                    renderResults(data);
+                })
+                .catch(error => {
+                    console.error('Search error:', error);
+                    searchResults.innerHTML = '<div class="global-search-dropdown__empty"><?= __('Search failed. Please try again.') ?></div>';
+                    showDropdown();
+                });
+        }
+
+        function renderResults(data) {
+            selectedIndex = -1;
+
+            if (data.results.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="global-search-dropdown__empty">
+                        <span class="global-search-dropdown__empty-icon"><?= $icons['search'] ?></span>
+                        <p><?= __('No results found for') ?> "<strong>${escapeHtml(data.query)}</strong>"</p>
+                    </div>
+                `;
+                showDropdown();
+                return;
+            }
+
+            let html = '';
+
+            // Group results by type
+            const grouped = {};
+            data.results.forEach(result => {
+                if (!grouped[result.type]) grouped[result.type] = [];
+                grouped[result.type].push(result);
+            });
+
+            const typeLabels = {
+                user: '<?= __('Users') ?>',
+                post: '<?= __('Posts') ?>',
+                class: '<?= __('Classes') ?>',
+                subject: '<?= __('Subjects') ?>',
+                course: '<?= __('Courses') ?>',
+            };
+
+            let itemIndex = 0;
+            for (const [type, results] of Object.entries(grouped)) {
+                html += `<div class="global-search-dropdown__group">
+                    <span class="global-search-dropdown__group-label">${typeLabels[type] || type}</span>`;
+
+                results.forEach(result => {
+                    const icon = icons[result.icon] || icons.user;
+                    html += `
+                        <a href="${result.url}" class="global-search-dropdown__item" data-index="${itemIndex}">
+                            <span class="global-search-dropdown__item-icon">${icon}</span>
+                            <div class="global-search-dropdown__item-content">
+                                <span class="global-search-dropdown__item-title">${highlightMatch(result.title, data.query)}</span>
+                                <span class="global-search-dropdown__item-subtitle">${escapeHtml(result.subtitle)}</span>
+                            </div>
+                        </a>
+                    `;
+                    itemIndex++;
+                });
+
+                html += '</div>';
+            }
+
+            if (data.total > data.results.length) {
+                html += `<div class="global-search-dropdown__footer">
+                    <?= __('Showing') ?> ${data.results.length} <?= __('of') ?> ${data.total} <?= __('results') ?>
+                </div>`;
+            }
+
+            searchResults.innerHTML = html;
+            showDropdown();
+        }
+
+        function highlightMatch(text, query) {
+            const escaped = escapeHtml(text);
+            const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+            return escaped.replace(regex, '<mark>$1</mark>');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function showDropdown() {
+            searchDropdown.classList.add('is-open');
+            searchContainer.classList.add('is-searching');
+        }
+
+        function hideDropdown() {
+            searchDropdown.classList.remove('is-open');
+            searchContainer.classList.remove('is-searching');
+            selectedIndex = -1;
+        }
+
+        function navigateResults(direction) {
+            const items = searchResults.querySelectorAll('.global-search-dropdown__item');
+            if (items.length === 0) return;
+
+            items[selectedIndex]?.classList.remove('is-selected');
+
+            if (direction === 'down') {
+                selectedIndex = selectedIndex < items.length - 1 ? selectedIndex + 1 : 0;
+            } else {
+                selectedIndex = selectedIndex > 0 ? selectedIndex - 1 : items.length - 1;
+            }
+
+            items[selectedIndex]?.classList.add('is-selected');
+            items[selectedIndex]?.scrollIntoView({ block: 'nearest' });
+        }
+
+        function selectCurrentResult() {
+            const items = searchResults.querySelectorAll('.global-search-dropdown__item');
+            if (items[selectedIndex]) {
+                window.location.href = items[selectedIndex].href;
+            }
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => performSearch(query), 250);
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                navigateResults('down');
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                navigateResults('up');
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (selectedIndex >= 0) {
+                    selectCurrentResult();
+                }
+            } else if (e.key === 'Escape') {
+                hideDropdown();
+                searchInput.blur();
+            }
+        });
+
+        searchInput.addEventListener('focus', function() {
+            if (this.value.trim().length >= 2) {
+                showDropdown();
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchContainer.contains(e.target)) {
+                hideDropdown();
+            }
+        });
+
+        // Keyboard shortcut: "/" to focus search
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    })();
+    </script>
     <?= $this->fetch('script') ?>
 </body>
 </html>
-
