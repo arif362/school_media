@@ -4790,20 +4790,22 @@ body.auth-body {
 .monthly-trend-card {
     background: white;
     border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.06);
+    border: 1px solid rgba(12, 74, 110, 0.08);
     margin-bottom: 1.5rem;
 }
 
 .monthly-trend-card .dashboard-card__header {
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid #e2e8f0;
+    background: #f8fafc;
 }
 
 .monthly-trend-card .dashboard-card__header h3 {
     margin: 0;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: #0f172a;
 }
 
 .monthly-trend-card .dashboard-card__body {
@@ -4816,7 +4818,7 @@ body.auth-body {
     gap: 0.75rem;
     height: 220px;
     padding: 1rem 0.5rem;
-    background: linear-gradient(to top, #f9fafb 0%, transparent 100%);
+    background: linear-gradient(to top, #f8fafc 0%, transparent 100%);
     border-radius: 0.5rem;
 }
 
@@ -4832,7 +4834,7 @@ body.auth-body {
 .trend-bar {
     width: 100%;
     max-width: 48px;
-    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(180deg, #06b6d4 0%, #0891b2 100%);
     border-radius: 0.5rem 0.5rem 0 0;
     position: relative;
     min-height: 8px;
@@ -4845,7 +4847,7 @@ body.auth-body {
 
 .trend-bar:hover {
     transform: scaleY(1.05);
-    box-shadow: 0 6px 10px -2px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 6px 10px -2px rgba(8, 145, 178, 0.3);
 }
 
 .trend-bar__value {
@@ -4853,7 +4855,7 @@ body.auth-body {
     bottom: calc(100% + 4px);
     font-size: 0.75rem;
     font-weight: 700;
-    color: #4338ca;
+    color: #0891b2;
     padding: 0.25rem 0.5rem;
     background: white;
     border-radius: 0.25rem;
@@ -5092,12 +5094,13 @@ body.auth-body {
     align-items: center;
     gap: 1rem;
     padding: 1.25rem 2rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
     color: white;
     border-radius: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     flex-wrap: wrap;
-    box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.15);
+    border: 1px solid rgba(12, 74, 110, 0.1);
 }
 
 .class-banner__name {
@@ -5122,7 +5125,8 @@ body.auth-body {
     border-radius: 1rem;
     padding: 1.25rem 1.5rem;
     margin-bottom: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.06);
+    border: 1px solid rgba(12, 74, 110, 0.08);
 }
 
 .filters-bar .filters-form {
@@ -5139,17 +5143,19 @@ body.auth-body {
 .filters-bar .form-control--small {
     min-width: 140px;
     padding: 0.625rem 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid #e5e7eb;
+    border-radius: 0.625rem;
+    border: 1px solid #d1d5db;
     font-size: 0.875rem;
-    background: #f9fafb;
+    background: #f8fafc;
     transition: all 0.2s ease;
+    color: #334155;
 }
 
 .filters-bar .form-control--small:focus {
     background: white;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #0891b2;
+    box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+    outline: none;
 }
 
 
@@ -5166,7 +5172,8 @@ body.auth-body {
     border-radius: 1rem;
     padding: 1.5rem;
     text-align: center;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.06);
+    border: 1px solid rgba(12, 74, 110, 0.08);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     position: relative;
     overflow: hidden;
@@ -5174,7 +5181,7 @@ body.auth-body {
 
 .summary-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 20px rgba(12, 74, 110, 0.1);
 }
 
 .summary-card--main {
@@ -5183,8 +5190,9 @@ body.auth-body {
     align-items: center;
     justify-content: space-between;
     padding: 2rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
     color: white;
+    border: none;
 }
 
 .summary-card--main .summary-card__value {
@@ -5203,66 +5211,71 @@ body.auth-body {
 }
 
 .summary-card__value {
-    font-size: 2.5rem;
-    font-weight: 800;
+    font-size: 2rem;
+    font-weight: 700;
     line-height: 1;
-    color: var(--text-primary);
+    color: #0f172a;
     display: block;
 }
 
 .summary-card__label {
-    font-size: 0.875rem;
-    color: var(--text-muted);
+    font-size: 0.75rem;
+    color: #64748b;
     margin-top: 0.5rem;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     display: block;
 }
 
 .summary-card--present {
-    border-top: 4px solid #22c55e;
-    background: linear-gradient(to bottom, #f0fdf4, white);
+    border-left: 4px solid #22c55e;
+    border-top: none;
+    background: white;
 }
 
 .summary-card--present .summary-card__value {
-    color: #166534;
+    color: #16a34a;
 }
 
 .summary-card--absent {
-    border-top: 4px solid #ef4444;
-    background: linear-gradient(to bottom, #fef2f2, white);
+    border-left: 4px solid #ef4444;
+    border-top: none;
+    background: white;
 }
 
 .summary-card--absent .summary-card__value {
-    color: #991b1b;
+    color: #dc2626;
 }
 
 .summary-card--late {
-    border-top: 4px solid #f59e0b;
-    background: linear-gradient(to bottom, #fffbeb, white);
+    border-left: 4px solid #f59e0b;
+    border-top: none;
+    background: white;
 }
 
 .summary-card--late .summary-card__value {
-    color: #92400e;
+    color: #d97706;
 }
 
 .summary-card--excused {
-    border-top: 4px solid #3b82f6;
-    background: linear-gradient(to bottom, #eff6ff, white);
+    border-left: 4px solid #06b6d4;
+    border-top: none;
+    background: white;
 }
 
 .summary-card--excused .summary-card__value {
-    color: #1e40af;
+    color: #0891b2;
 }
 
 .summary-card--total {
-    border-top: 4px solid #6366f1;
-    background: linear-gradient(to bottom, #eef2ff, white);
+    border-left: 4px solid #0c4a6e;
+    border-top: none;
+    background: white;
 }
 
 .summary-card--total .summary-card__value {
-    color: #4338ca;
+    color: #0c4a6e;
 }
 
 /* Progress Ring */
@@ -5297,15 +5310,15 @@ body.auth-body {
 }
 
 .progress-ring__fill--success {
-    stroke: #4ade80;
+    stroke: #22c55e;
 }
 
 .progress-ring__fill--warning {
-    stroke: #fbbf24;
+    stroke: #f59e0b;
 }
 
 .progress-ring__fill--danger {
-    stroke: #f87171;
+    stroke: #ef4444;
 }
 
 /* Class Info Grid */
@@ -5432,21 +5445,22 @@ body.auth-body {
 .student-attendance .dashboard-card {
     background: white;
     border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.06);
+    border: 1px solid rgba(12, 74, 110, 0.08);
     overflow: hidden;
 }
 
 .student-attendance .dashboard-card__header {
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid #f3f4f6;
-    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    background: #f8fafc;
 }
 
 .student-attendance .dashboard-card__header h3 {
     margin: 0;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: #0f172a;
 }
 
 .student-attendance .dashboard-card__body {
@@ -5458,34 +5472,43 @@ body.auth-body {
 }
 
 .student-attendance .data-table thead {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
 }
 
 .student-attendance .data-table th {
     padding: 1rem 1.25rem;
     font-size: 0.75rem;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .student-attendance .data-table td {
     padding: 1rem 1.25rem;
-    color: var(--text-primary);
+    color: #334155;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.student-attendance .data-table tbody tr:hover {
+    background: #f8fafc;
 }
 
 .student-attendance .data-table td strong {
-    color: var(--text-primary);
+    color: #0f172a;
     font-weight: 600;
 }
 
 .student-attendance .empty-state {
     padding: 3rem 1.5rem;
     text-align: center;
-    color: var(--text-muted);
+    color: #64748b;
 }
 
 .student-attendance .pagination-wrapper {
     padding: 1.25rem 1.5rem;
-    border-top: 1px solid #e5e7eb;
-    background: linear-gradient(to bottom, #f9fafb, #f3f4f6);
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -5495,7 +5518,7 @@ body.auth-body {
 }
 
 .student-attendance .pagination-info {
-    color: #6b7280;
+    color: #64748b;
     font-size: 0.875rem;
     font-weight: 500;
 }
@@ -5536,20 +5559,20 @@ body.auth-body {
 }
 
 .student-attendance .pagination a:hover {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
     color: white;
     border-color: transparent;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.2);
 }
 
 .student-attendance .pagination span.current,
 .student-attendance .pagination .active a {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
     color: white;
     border-color: transparent;
     font-weight: 600;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.2);
 }
 
 .student-attendance .pagination .disabled,
@@ -8945,4 +8968,919 @@ select.form-input:focus {
 
 .onboarding-tips a:hover {
     text-decoration: underline;
+}
+
+/* ============================================
+   Student Portal Specific Styles
+   ============================================ */
+
+/* Student Layout - Different accent color (teal/cyan theme) */
+.student-layout .admin-sidebar {
+    background: linear-gradient(180deg, #0c4a6e 0%, #164e63 50%, #155e75 100%);
+}
+
+.student-layout .admin-sidebar__header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.student-layout .student-logo-wrap {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+}
+
+.student-layout .admin-sidebar__link.is-active {
+    background: linear-gradient(90deg, rgba(6, 182, 212, 0.2) 0%, rgba(6, 182, 212, 0.05) 100%);
+}
+
+.student-layout .admin-sidebar__link.is-active::before {
+    background: #06b6d4;
+}
+
+.student-layout .admin-sidebar__footer {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Student Avatar */
+.student-layout .student-avatar-icon {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    color: white;
+}
+
+/* Student Topbar accent */
+.student-layout .admin-topbar__search-input:focus {
+    border-color: #06b6d4;
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+}
+
+.student-layout .admin-topbar__search.is-searching {
+    border-color: #06b6d4;
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+}
+
+/* Student section styles */
+.student-layout .admin-section__header h1 {
+    color: #0c4a6e;
+}
+
+/* Student dashboard cards */
+.student-layout .stat-card--info {
+    border-left-color: #06b6d4;
+}
+
+.student-layout .stat-card--info .stat-card__icon {
+    background: rgba(6, 182, 212, 0.1);
+    color: #0891b2;
+}
+
+/* Student breadcrumb accent */
+.student-layout .breadcrumb a:hover {
+    color: #06b6d4;
+}
+
+/* Student button accent */
+.student-layout .btn--solid {
+    background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
+}
+
+.student-layout .btn--solid:hover {
+    background: linear-gradient(135deg, #164e63 0%, #155e75 100%);
+}
+
+/* Student welcome card */
+.student-welcome-card {
+    background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
+    color: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.student-welcome-card h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.student-welcome-card p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+/* Student quick stats */
+.student-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.student-stat-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.08);
+    border: 1px solid rgba(12, 74, 110, 0.06);
+}
+
+.student-stat-card__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    background: rgba(6, 182, 212, 0.1);
+    color: #0891b2;
+}
+
+.student-stat-card__content {
+    flex: 1;
+}
+
+.student-stat-card__value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0c4a6e;
+}
+
+.student-stat-card__label {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+/* Course cards for students */
+.student-course-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.08);
+    border: 1px solid rgba(12, 74, 110, 0.06);
+    transition: all 0.2s ease;
+}
+
+.student-course-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(12, 74, 110, 0.12);
+}
+
+.student-course-card__header {
+    background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
+    color: white;
+    padding: 1.25rem;
+}
+
+.student-course-card__header h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.student-course-card__body {
+    padding: 1.25rem;
+}
+
+.student-course-card__meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.student-course-card__footer {
+    padding: 1rem 1.25rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* ========================================
+   STUDENT DASHBOARD STYLES
+   ======================================== */
+
+.student-dashboard-section {
+    padding: 0;
+}
+
+/* Welcome Header */
+.student-welcome-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
+    color: white;
+    padding: 2rem 2.5rem;
+    border-radius: 1.25rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(12, 74, 110, 0.2);
+}
+
+.student-welcome-header__content h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.student-welcome-header__content p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 1rem;
+}
+
+.student-welcome-header__date {
+    text-align: right;
+}
+
+.student-welcome-header__date .current-date {
+    font-size: 0.9375rem;
+    opacity: 0.85;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+/* Stats Row */
+.student-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.student-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 1.25rem 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.06);
+    border: 1px solid rgba(12, 74, 110, 0.06);
+    transition: all 0.2s ease;
+}
+
+.student-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(12, 74, 110, 0.1);
+}
+
+.student-stat-card__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.student-stat-card__icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.student-stat-card__icon--cyan {
+    background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+    color: #0891b2;
+}
+
+.student-stat-card__icon--green {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    color: #16a34a;
+}
+
+.student-stat-card__icon--red {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    color: #dc2626;
+}
+
+.student-stat-card__icon--amber {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    color: #d97706;
+}
+
+/* Dashboard Grid */
+.student-dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 2rem;
+}
+
+.student-dashboard-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.student-dashboard-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Student Card */
+.student-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.06);
+    border: 1px solid rgba(12, 74, 110, 0.06);
+    overflow: hidden;
+}
+
+.student-card--highlight {
+    background: linear-gradient(180deg, #f0fdfa 0%, white 100%);
+    border-color: rgba(8, 145, 178, 0.15);
+}
+
+.student-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+.student-card__header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.student-card__body {
+    padding: 1.5rem;
+}
+
+.student-card__body--no-padding {
+    padding: 0;
+}
+
+/* Month Badge */
+.month-badge {
+    background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+    color: white;
+    padding: 0.375rem 0.875rem;
+    border-radius: 2rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+
+/* Profile Card */
+.student-profile-info {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+}
+
+.student-profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 1rem;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(12, 74, 110, 0.1);
+}
+
+.student-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.student-profile-avatar .avatar-initial {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0c4a6e 0%, #0891b2 100%);
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.student-profile-details h4 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.student-profile-email {
+    margin: 0 0 0.75rem 0;
+    color: #64748b;
+    font-size: 0.9375rem;
+}
+
+.student-profile-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.student-profile-badges .badge--primary {
+    background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+    color: white;
+}
+
+.profile-completion-alert {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 0.75rem;
+    color: #0369a1;
+    font-size: 0.875rem;
+}
+
+.profile-completion-alert svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* Attendance Visual */
+.attendance-visual {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.attendance-ring-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+}
+
+.attendance-ring {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.attendance-ring__bg {
+    fill: none;
+    stroke: #e2e8f0;
+    stroke-width: 3;
+}
+
+.attendance-ring__fill {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke-dasharray 0.5s ease;
+}
+
+.attendance-ring__fill--good {
+    stroke: #22c55e;
+}
+
+.attendance-ring__fill--warning {
+    stroke: #f59e0b;
+}
+
+.attendance-ring__fill--danger {
+    stroke: #ef4444;
+}
+
+.attendance-ring__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.attendance-ring__value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1;
+}
+
+.attendance-ring__label {
+    display: block;
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+}
+
+/* Attendance Breakdown List */
+.attendance-breakdown-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.attendance-breakdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.625rem;
+    background: #f8fafc;
+}
+
+.attendance-breakdown-item .breakdown-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.attendance-breakdown-item--present .breakdown-dot { background: #22c55e; }
+.attendance-breakdown-item--absent .breakdown-dot { background: #ef4444; }
+.attendance-breakdown-item--late .breakdown-dot { background: #f59e0b; }
+.attendance-breakdown-item--excused .breakdown-dot { background: #3b82f6; }
+
+.attendance-breakdown-item .breakdown-label {
+    flex: 1;
+    font-size: 0.9375rem;
+    color: #334155;
+}
+
+.attendance-breakdown-item .breakdown-value {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #0f172a;
+}
+
+/* Attendance Warning Alert */
+.attendance-warning-alert {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+    border: 1px solid #fde047;
+    border-radius: 0.75rem;
+    color: #854d0e;
+}
+
+.attendance-warning-alert svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: #ca8a04;
+}
+
+.attendance-warning-alert strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #713f12;
+}
+
+.attendance-warning-alert p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+/* Student Data Table */
+.student-data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.student-data-table thead {
+    background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
+}
+
+.student-data-table th {
+    padding: 1rem 1.25rem;
+    font-size: 0.75rem;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+}
+
+.student-data-table td {
+    padding: 1rem 1.25rem;
+    color: #334155;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.student-data-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.student-data-table .date-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.student-data-table .date-cell strong {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.student-data-table .date-cell span {
+    font-size: 0.8125rem;
+    color: #64748b;
+}
+
+.student-data-table .remarks-cell {
+    color: #64748b;
+    font-size: 0.875rem;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Monthly Attendance Display */
+.monthly-attendance-display {
+    text-align: center;
+    padding: 1.5rem 0;
+}
+
+.monthly-percentage {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.monthly-percentage--good {
+    color: #16a34a;
+}
+
+.monthly-percentage--warning {
+    color: #d97706;
+}
+
+.monthly-label {
+    font-size: 0.9375rem;
+    color: #64748b;
+}
+
+/* Monthly Stats List */
+.monthly-stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.monthly-stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.625rem 0.75rem;
+    background: rgba(15, 23, 42, 0.02);
+    border-radius: 0.5rem;
+}
+
+.monthly-stat-item .stat-label {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.monthly-stat-item .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.monthly-stat-item .stat-value--success { color: #16a34a; }
+.monthly-stat-item .stat-value--danger { color: #dc2626; }
+.monthly-stat-item .stat-value--warning { color: #d97706; }
+
+/* Quick Actions List */
+.quick-actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.quick-action-link {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.875rem 1rem;
+    background: #f8fafc;
+    border-radius: 0.625rem;
+    color: #334155;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.quick-action-link:hover {
+    background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
+    color: white;
+    transform: translateX(4px);
+}
+
+.quick-action-link .quick-action-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.quick-action-link:hover .quick-action-icon {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.quick-action-link .quick-action-icon svg {
+    width: 18px;
+    height: 18px;
+    color: #0891b2;
+}
+
+.quick-action-link:hover .quick-action-icon svg {
+    color: white;
+}
+
+/* Recent Posts List */
+.recent-posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.recent-post-item {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.recent-post-item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.recent-post-item h4 {
+    margin: 0 0 0.25rem 0;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.recent-post-item h4 a {
+    color: #0f172a;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.recent-post-item h4 a:hover {
+    color: #0891b2;
+}
+
+.recent-post-item .post-date {
+    font-size: 0.8125rem;
+    color: #94a3b8;
+}
+
+.empty-message {
+    color: #64748b;
+    font-size: 0.9375rem;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+/* Button Variants */
+.btn--outline {
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn--outline:hover {
+    border-color: #0891b2;
+    color: #0891b2;
+    background: rgba(8, 145, 178, 0.05);
+}
+
+.btn--link {
+    background: transparent;
+    border: none;
+    color: #0891b2;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.btn--link:hover {
+    text-decoration: underline;
+}
+
+.btn--sm {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .student-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .student-dashboard-sidebar {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .student-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .student-welcome-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    .student-welcome-header__date {
+        text-align: left;
+    }
+
+    .student-stats-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .student-stat-card {
+        padding: 1rem;
+    }
+
+    .student-stat-card__icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .student-stat-card__icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .student-dashboard-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .attendance-visual {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .attendance-ring-container {
+        width: 140px;
+        height: 140px;
+    }
+
+    .attendance-breakdown-list {
+        width: 100%;
+    }
+
+    .student-profile-info {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .student-profile-badges {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .student-stats-row {
+        grid-template-columns: 1fr;
+    }
+
+    .student-welcome-header__content h1 {
+        font-size: 1.375rem;
+    }
 }

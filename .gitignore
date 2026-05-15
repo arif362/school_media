@@ -57,3 +57,10 @@ nbproject/*
 yarn-debug.log
 yarn-error.log
 config/Migrations/schema-dump-default.lock
+
+# BMad directories
+bmad-docs/
+bmad-ledger/
+.claude/
+.bmad-core/
+.env
