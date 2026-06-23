@@ -54,7 +54,7 @@ jobs:
         DATABASE_TEST_URL: sqlite://./testdb.sqlite
 
     - name: Upload coverage artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: coverage-${{ matrix.php-version }}-${{ matrix.dependencies }}
         path: build/logs/clover.xml
